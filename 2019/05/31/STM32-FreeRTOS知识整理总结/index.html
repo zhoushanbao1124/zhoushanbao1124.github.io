@@ -87,16 +87,16 @@
 <meta property="og:site_name" content="Home">
 <meta property="og:description" content="参考自“https://www.cnblogs.com/lifexy/p/10463050.html” 1. 基础知识">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/STM32-FreeRTOS%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86%E6%80%BB%E7%BB%93/1182576-20190302210240740-1963860160.png">
-<meta property="og:image" content="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190302210308493-1751575502.png">
-<meta property="og:image" content="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190302210322890-555661997.png">
-<meta property="og:image" content="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190302210336935-613584804.png">
-<meta property="og:image" content="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190303001247845-2029905881.png">
-<meta property="og:updated_time" content="2019-05-30T17:11:36.505Z">
+<meta property="og:image" content="http://yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/1182576-20190302210240740-1963860160.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/1182576-20190302210308493-1751575502.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/1182576-20190302210322890-555661997.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/1182576-20190302210336935-613584804.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/1182576-20190303001247845-2029905881.png">
+<meta property="og:updated_time" content="2019-05-30T17:24:34.649Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="STM32-FreeRTOS知识整理总结">
 <meta name="twitter:description" content="参考自“https://www.cnblogs.com/lifexy/p/10463050.html” 1. 基础知识">
-<meta name="twitter:image" content="http://yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/STM32-FreeRTOS%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86%E6%80%BB%E7%BB%93/1182576-20190302210240740-1963860160.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/1182576-20190302210240740-1963860160.png">
 
 
 
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-05-31T01:11:36+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-31T01:24:34+08:00">
                 2019-05-31
               </time>
             
@@ -432,7 +432,7 @@
 <blockquote>
 <p>注意:在RTOS中是优先值越高则优先级越高(和ucos/linux的相反) </p>
 </blockquote>
-<p>在移植的时候,主要裁剪FreeRTOS/Source/portable文件夹,该文件夹用来针对不同MCU做的一些处理,如下图所示,我们只需要使用:<br><img src="/2019/05/31/STM32-FreeRTOS知识整理总结/STM32-FreeRTOS%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86%E6%80%BB%E7%BB%93/1182576-20190302210240740-1963860160.png" alt="image"></p>
+<p>在移植的时候,主要裁剪FreeRTOS/Source/portable文件夹,该文件夹用来针对不同MCU做的一些处理,如下图所示,我们只需要使用:<br><img src="/2019/05/31/STM32-FreeRTOS知识整理总结/1182576-20190302210240740-1963860160.png" alt="image"></p>
 <blockquote>
 <p>FreeRTOS/Source/portable/Keil 使用MDK编译环境所需要使用的文件<br>FreeRTOS/Source/portable/RVDS 内存管理相关的文件，移植所必需的<br>FreeRTOS/Source/portable/MemMang 使用MDK编译环境所需要使用的文件</p>
 </blockquote>
@@ -451,12 +451,12 @@
 <h2 id="1-2-添加头文件路径"><a href="#1-2-添加头文件路径" class="headerlink" title="1.2 添加头文件路径"></a>1.2 添加头文件路径</h2><p>添加FreeRTOS\include<br>添加FreeRTOS\portable\RVDS\ARM_CM3<br>并将原子中的FreeRTOSConfig.h也复制到我们项目的FreeRTOS\include中(用来配置RTOS系统)</p>
 <h1 id="2-FreeRTOSConfig-h配置介绍"><a href="#2-FreeRTOSConfig-h配置介绍" class="headerlink" title="2. FreeRTOSConfig.h配置介绍"></a>2. FreeRTOSConfig.h配置介绍</h1><p>一般会写configXXXXX或者INCLUDE_XXXX类似的宏,这两个宏区别在于:</p>
 <p>configXXXXX<br>用来实现不同功能,比如定义configUSE_COUNTING_SEMAPHORES为1时,表示使用计数信号量</p>
-<p>INCLUDE_XXXX<br>用来是否将某个API函数编译进程序中.<br>比如定义INCLUDE_xTaskGetSchedulerState 为1 时,则将会编译xTaskGetSchedulerState()函数,如下图所示:<br><img src="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190302210308493-1751575502.png" alt="image"></p>
+<p>INCLUDE_XXXX<br>用来是否将某个API函数编译进程序中.<br>比如定义INCLUDE_xTaskGetSchedulerState 为1 时,则将会编译xTaskGetSchedulerState()函数,如下图所示:<br><img src="/2019/05/31/STM32-FreeRTOS知识整理总结/1182576-20190302210308493-1751575502.png" alt="image"></p>
 <h1 id="3-FreeRTOS任务状态"><a href="#3-FreeRTOS任务状态" class="headerlink" title="3. FreeRTOS任务状态"></a>3. FreeRTOS任务状态</h1><h2 id="3-1-运行态"><a href="#3-1-运行态" class="headerlink" title="3.1 运行态"></a>3.1 运行态</h2><p>指当前任务正在运行.</p>
 <h2 id="3-2-就绪态"><a href="#3-2-就绪态" class="headerlink" title="3.2 就绪态"></a>3.2 就绪态</h2><p>指当前任务正在等待调度,因为有个高优先级/同优先级的任务正在运行中</p>
 <h2 id="3-3-阻塞态"><a href="#3-3-阻塞态" class="headerlink" title="3.3 阻塞态"></a>3.3 阻塞态</h2><p>当前任务处于等待外部事件通知或通过vTaskDelay()函数进入休眠了,外部事件通知常见有信号量、等待队列、事件标志组、任务通知.</p>
 <h2 id="3-4-挂起态"><a href="#3-4-挂起态" class="headerlink" title="3.4 挂起态"></a>3.4 挂起态</h2><p>类似于暂停,表示不会再参与任务调度了,通过vTaskSuspend()实现,重新恢复调度则使用xTaskResume()</p>
-<h1 id="4-FreeRTOS中断配置"><a href="#4-FreeRTOS中断配置" class="headerlink" title="4. FreeRTOS中断配置"></a>4. FreeRTOS中断配置</h1><h2 id="4-1-回忆stm32-NVIC中断"><a href="#4-1-回忆stm32-NVIC中断" class="headerlink" title="4.1 回忆stm32 NVIC中断"></a>4.1 回忆stm32 NVIC中断</h2><p><img src="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190302210322890-555661997.png" alt="image"></p>
+<h1 id="4-FreeRTOS中断配置"><a href="#4-FreeRTOS中断配置" class="headerlink" title="4. FreeRTOS中断配置"></a>4. FreeRTOS中断配置</h1><h2 id="4-1-回忆stm32-NVIC中断"><a href="#4-1-回忆stm32-NVIC中断" class="headerlink" title="4.1 回忆stm32 NVIC中断"></a>4.1 回忆stm32 NVIC中断</h2><p><img src="/2019/05/31/STM32-FreeRTOS知识整理总结/1182576-20190302210322890-555661997.png" alt="image"></p>
 <p>比如我们设置为NVIC_PriorityGroup_4时:<br>表示抢占优先级为4bit(即为2^4,为0~15个抢占优先级),副优先级为0bit(表示没有).</p>
 <h2 id="4-2-抢占优先级和副优先级的区别"><a href="#4-2-抢占优先级和副优先级的区别" class="headerlink" title="4.2 抢占优先级和副优先级的区别:"></a>4.2 抢占优先级和副优先级的区别:</h2><ol>
 <li>抢占优先级和副优先级的值越低,则优先级越高</li>
@@ -465,7 +465,7 @@
 </ol>
 <h2 id="4-3-FreeRTOS中断配置宏"><a href="#4-3-FreeRTOS中断配置宏" class="headerlink" title="4.3 FreeRTOS中断配置宏"></a>4.3 FreeRTOS中断配置宏</h2><p>configKERNEL_INTERRUPT_PRIORITY<br>用来配置中断最低抢占优先级,也就是可以FreeRTOS可以管理的最小抢占优先级,所以使用FreeRTOS时,我们尽量设置stm32为NVIC_PriorityGroup_4,这样就可以管理16个优先级了.</p>
 <p>configMAX_SYSCALL_INTERRUPT_PRIORITY<br>用来配置FreeRTOS能够安全管理的的最高优先级.比如原子的FreeRTOSConfig.h里就设置为5,而0-4的优先级中断就不会被FreeRTOS因为开关中断而禁止掉(一直都会有),并且不能调用RTOS中的”FromISR”结尾的API函数.比如喂看门狗中断函数就需要设置为0-4.</p>
-<p>如下图所示(来自原子手册):<br><img src="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190302210336935-613584804.png" alt="image"></p>
+<p>如下图所示(来自原子手册):<br><img src="/2019/05/31/STM32-FreeRTOS知识整理总结/1182576-20190302210336935-613584804.png" alt="image"></p>
 <p>4.3 FreeRTOS中断开关函数</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">portENABLE_INTERRUPTS();    </span><br><span class="line">//开中断,将configMAX_SYSCALL_INTERRUPT_PRIORITY至 configKERNEL_INTERRUPT_PRIORITY之间的优先级中断打开</span><br><span class="line"></span><br><span class="line">portDISABLE_INTERRUPTS();    </span><br><span class="line">//关中断,将configMAX_SYSCALL_INTERRUPT_PRIORITY至 configKERNEL_INTERRUPT_PRIORITY之间的优先级中断禁止掉</span><br></pre></td></tr></table></figure>
 
@@ -494,7 +494,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xQueueSendFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken )</span><br></pre></td></tr></table></figure>
 
 <p>PxHigherPriorityTaskWoken<br>用来标记退出该函数后是否需要进行任务切换,因为我们发送队列时,有可能会将某个阻塞任务退出阻塞态,而此时又在中断中,所以当PxHigherPriorityTaskWoken为pdTRUE时,我们则必须进行一次任务切换.</p>
-<p>可以通过portYIELD_FROM_ISR()来进行任务切换,并且我们不需要去判断PxHigherPriorityTaskWoken是否为pdTRUE,因为该函数内部有判断的,如下图所示:<br><img src="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190303001247845-2029905881.png" alt="image"></p>
+<p>可以通过portYIELD_FROM_ISR()来进行任务切换,并且我们不需要去判断PxHigherPriorityTaskWoken是否为pdTRUE,因为该函数内部有判断的,如下图所示:<br><img src="/2019/05/31/STM32-FreeRTOS知识整理总结/1182576-20190303001247845-2029905881.png" alt="image"></p>
 <p>来个中断函数发送队列示例:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">extern QueueHandle_t Message_Queue;                          //信息队列句柄</span><br><span class="line"></span><br><span class="line">void USART1_IRQHandler(void)                       //串口1中断服务程序</span><br><span class="line">&#123;</span><br><span class="line">    BaseType_t xHigherPriorityTaskWoken;          //定义任务切换标志位</span><br><span class="line">    if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET) </span><br><span class="line">    &#123;</span><br><span class="line">        //处理中断接收数据</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (Message_Queue!=NULL)             //判断Message_Queue是否已创建</span><br><span class="line">    &#123;</span><br><span class="line">        xQueueSendFromISR(Message_Queue, RX_BUF,&amp;xHigherPriorityTaskWoken);</span><br><span class="line">        //向队列Message_Queue中发送RX_BUF</span><br><span class="line">        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);</span><br><span class="line">        //通过portYIELD_FROM_ISR()判断是否需要切换任务</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -566,6 +566,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/31/STM32相关/" rel="prev" title="STM32相关">
+                STM32相关 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -644,7 +648,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
