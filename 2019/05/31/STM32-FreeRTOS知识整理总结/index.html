@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="STM32,FreeRTOS,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考自“https://www.cnblogs.com/lifexy/p/10463050.html” 1. 基础知识">
+<meta name="keywords" content="STM32,FreeRTOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32-FreeRTOS知识整理总结">
+<meta property="og:url" content="http://yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/index.html">
+<meta property="og:site_name" content="Home">
+<meta property="og:description" content="参考自“https://www.cnblogs.com/lifexy/p/10463050.html” 1. 基础知识">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/STM32-FreeRTOS%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86%E6%80%BB%E7%BB%93/1182576-20190302210240740-1963860160.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190302210308493-1751575502.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190302210322890-555661997.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190302210336935-613584804.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190303001247845-2029905881.png">
+<meta property="og:updated_time" content="2019-05-30T17:11:36.505Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="STM32-FreeRTOS知识整理总结">
+<meta name="twitter:description" content="参考自“https://www.cnblogs.com/lifexy/p/10463050.html” 1. 基础知识">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/STM32-FreeRTOS%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86%E6%80%BB%E7%BB%93/1182576-20190302210240740-1963860160.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/">
+
+
+
+
+
+  <title>STM32-FreeRTOS知识整理总结 | Home</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '141114564', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhou">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/IMG_20150705_122453_2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">STM32-FreeRTOS知识整理总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-31T00:39:05+08:00">
+                2019-05-31
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-31T01:11:36+08:00">
+                2019-05-31
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/STM32/" itemprop="url" rel="index">
+                    <span itemprop="name">STM32</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/STM32/FreeRTOS/" itemprop="url" rel="index">
+                    <span itemprop="name">FreeRTOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考自“<a href="https://www.cnblogs.com/lifexy/p/10463050.html”" target="_blank" rel="noopener">https://www.cnblogs.com/lifexy/p/10463050.html”</a></p>
+<h1 id="1-基础知识"><a href="#1-基础知识" class="headerlink" title="1. 基础知识"></a>1. 基础知识</h1><a id="more"></a>
+<blockquote>
+<p>注意:在RTOS中是优先值越高则优先级越高(和ucos/linux的相反) </p>
+</blockquote>
+<p>在移植的时候,主要裁剪FreeRTOS/Source/portable文件夹,该文件夹用来针对不同MCU做的一些处理,如下图所示,我们只需要使用:<br><img src="//yoursite.com/2019/05/31/STM32-FreeRTOS知识整理总结/STM32-FreeRTOS%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86%E6%80%BB%E7%BB%93/1182576-20190302210240740-1963860160.png" alt="image"></p>
+<blockquote>
+<p>FreeRTOS/Source/portable/Keil 使用MDK编译环境所需要使用的文件<br>FreeRTOS/Source/portable/RVDS 内存管理相关的文件，移植所必需的<br>FreeRTOS/Source/portable/MemMang 使用MDK编译环境所需要使用的文件</p>
+</blockquote>
+<h2 id="1-1配置工程时-选择memMang时-一般使用heap-4-c"><a href="#1-1配置工程时-选择memMang时-一般使用heap-4-c" class="headerlink" title="1.1配置工程时,选择memMang时,一般使用heap_4.c"></a>1.1配置工程时,选择memMang时,一般使用heap_4.c</h2><blockquote>
+<ul>
+<li>heep_1.c只能分配内存而不能释放内存。</li>
+<li>heep_2.c可以分配和释放内存但不能合并空闲内存块。</li>
+<li>heep_3.c简单的封装了线程安全版的标准C语言malloc和free函数。</li>
+<li>heap_4: 优点在于可以有效的利用内存碎片来合并为一个大内存.缺点在于只能用来一个ram里.</li>
+<li>heap_5: 一般针对有外部RAM才用到,优点在于可以同时利用内部ram和外部ram来进行内存碎片合并.</li>
+</ul>
+</blockquote>
+<p>然后我们在分配释放内存的时候,就尽量使用RTOS带的函数来实现,分配/释放函数如下所示:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">void *pvPortMalloc( size_t xWantedSize );    </span><br><span class="line">void vPortFree( void *pv );</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-添加头文件路径"><a href="#1-2-添加头文件路径" class="headerlink" title="1.2 添加头文件路径"></a>1.2 添加头文件路径</h2><p>添加FreeRTOS\include<br>添加FreeRTOS\portable\RVDS\ARM_CM3<br>并将原子中的FreeRTOSConfig.h也复制到我们项目的FreeRTOS\include中(用来配置RTOS系统)</p>
+<h1 id="2-FreeRTOSConfig-h配置介绍"><a href="#2-FreeRTOSConfig-h配置介绍" class="headerlink" title="2. FreeRTOSConfig.h配置介绍"></a>2. FreeRTOSConfig.h配置介绍</h1><p>一般会写configXXXXX或者INCLUDE_XXXX类似的宏,这两个宏区别在于:</p>
+<p>configXXXXX<br>用来实现不同功能,比如定义configUSE_COUNTING_SEMAPHORES为1时,表示使用计数信号量</p>
+<p>INCLUDE_XXXX<br>用来是否将某个API函数编译进程序中.<br>比如定义INCLUDE_xTaskGetSchedulerState 为1 时,则将会编译xTaskGetSchedulerState()函数,如下图所示:<br><img src="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190302210308493-1751575502.png" alt="image"></p>
+<h1 id="3-FreeRTOS任务状态"><a href="#3-FreeRTOS任务状态" class="headerlink" title="3. FreeRTOS任务状态"></a>3. FreeRTOS任务状态</h1><h2 id="3-1-运行态"><a href="#3-1-运行态" class="headerlink" title="3.1 运行态"></a>3.1 运行态</h2><p>指当前任务正在运行.</p>
+<h2 id="3-2-就绪态"><a href="#3-2-就绪态" class="headerlink" title="3.2 就绪态"></a>3.2 就绪态</h2><p>指当前任务正在等待调度,因为有个高优先级/同优先级的任务正在运行中</p>
+<h2 id="3-3-阻塞态"><a href="#3-3-阻塞态" class="headerlink" title="3.3 阻塞态"></a>3.3 阻塞态</h2><p>当前任务处于等待外部事件通知或通过vTaskDelay()函数进入休眠了,外部事件通知常见有信号量、等待队列、事件标志组、任务通知.</p>
+<h2 id="3-4-挂起态"><a href="#3-4-挂起态" class="headerlink" title="3.4 挂起态"></a>3.4 挂起态</h2><p>类似于暂停,表示不会再参与任务调度了,通过vTaskSuspend()实现,重新恢复调度则使用xTaskResume()</p>
+<h1 id="4-FreeRTOS中断配置"><a href="#4-FreeRTOS中断配置" class="headerlink" title="4. FreeRTOS中断配置"></a>4. FreeRTOS中断配置</h1><h2 id="4-1-回忆stm32-NVIC中断"><a href="#4-1-回忆stm32-NVIC中断" class="headerlink" title="4.1 回忆stm32 NVIC中断"></a>4.1 回忆stm32 NVIC中断</h2><p><img src="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190302210322890-555661997.png" alt="image"></p>
+<p>比如我们设置为NVIC_PriorityGroup_4时:<br>表示抢占优先级为4bit(即为2^4,为0~15个抢占优先级),副优先级为0bit(表示没有).</p>
+<h2 id="4-2-抢占优先级和副优先级的区别"><a href="#4-2-抢占优先级和副优先级的区别" class="headerlink" title="4.2 抢占优先级和副优先级的区别:"></a>4.2 抢占优先级和副优先级的区别:</h2><ol>
+<li>抢占优先级和副优先级的值越低,则优先级越高</li>
+<li>高的抢占优先级的中断可以直接打断低的抢占优先级的中断</li>
+<li>高的副优先级的中断不可以打断低的副优先级的中断(只是两个相同抢占优先级的中断同时来的时候,只会优先选择高的副优先级)</li>
+</ol>
+<h2 id="4-3-FreeRTOS中断配置宏"><a href="#4-3-FreeRTOS中断配置宏" class="headerlink" title="4.3 FreeRTOS中断配置宏"></a>4.3 FreeRTOS中断配置宏</h2><p>configKERNEL_INTERRUPT_PRIORITY<br>用来配置中断最低抢占优先级,也就是可以FreeRTOS可以管理的最小抢占优先级,所以使用FreeRTOS时,我们尽量设置stm32为NVIC_PriorityGroup_4,这样就可以管理16个优先级了.</p>
+<p>configMAX_SYSCALL_INTERRUPT_PRIORITY<br>用来配置FreeRTOS能够安全管理的的最高优先级.比如原子的FreeRTOSConfig.h里就设置为5,而0-4的优先级中断就不会被FreeRTOS因为开关中断而禁止掉(一直都会有),并且不能调用RTOS中的”FromISR”结尾的API函数.比如喂看门狗中断函数就需要设置为0-4.</p>
+<p>如下图所示(来自原子手册):<br><img src="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190302210336935-613584804.png" alt="image"></p>
+<p>4.3 FreeRTOS中断开关函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">portENABLE_INTERRUPTS();    </span><br><span class="line">//开中断,将configMAX_SYSCALL_INTERRUPT_PRIORITY至 configKERNEL_INTERRUPT_PRIORITY之间的优先级中断打开</span><br><span class="line"></span><br><span class="line">portDISABLE_INTERRUPTS();    </span><br><span class="line">//关中断,将configMAX_SYSCALL_INTERRUPT_PRIORITY至 configKERNEL_INTERRUPT_PRIORITY之间的优先级中断禁止掉</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-任务常用API函数"><a href="#5-任务常用API函数" class="headerlink" title="5.任务常用API函数"></a>5.任务常用API函数</h1><h2 id="5-1-xTaskCreate创建任务函数"><a href="#5-1-xTaskCreate创建任务函数" class="headerlink" title="5.1 xTaskCreate创建任务函数"></a>5.1 xTaskCreate创建任务函数</h2><p>定义如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">xTaskCreate(    </span><br><span class="line">    TaskFunction_t pxTaskCode,   //任务函数,用来供给函数指针调用的</span><br><span class="line">    const char * const pcName,   //任务的字符串别名</span><br><span class="line">    const uint16_t usStackDepth, //任务堆栈深度,实际申请到的堆栈是该参数的4倍</span><br><span class="line">    void * const pvParameters,   //函数参数,用来供给指针调用的</span><br><span class="line">    UBaseType_t uxPriority,      //优先级,越高优先级高,范围为0~configMAX_PRIORITIES-1     </span><br><span class="line">                                 //注意优先级0会创建为空闲任务, 优先级configMAX_PRIORITIES-1会创建一个软件定时器服务任务(管理定时器的)</span><br><span class="line">    TaskHandle_t * const pxCreatedTask  //任务句柄,该句柄可以用于挂起/恢复/删除对应的任务</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">//返回值 errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY(-1):表示创建任务堆空间不足pdPASS(1):创建成功</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-taskENTER-CRITICAL-和taskEXIT-CRITICAL"><a href="#5-2-taskENTER-CRITICAL-和taskEXIT-CRITICAL" class="headerlink" title="5.2 taskENTER_CRITICAL()和taskEXIT_CRITICAL()"></a>5.2 taskENTER_CRITICAL()和taskEXIT_CRITICAL()</h2><p>用于任务中进入/退出临界区,调用taskENTER_CRITICAL()主要会关闭其他任务调度.而taskEXIT_CRITICAL()则会恢复任务调度,一般用于初始化外设等.</p>
+<h2 id="5-3-taskENTER-CRITICAL-FROM-ISR-和taskEXIT-CRITICAL-FROM-ISR"><a href="#5-3-taskENTER-CRITICAL-FROM-ISR-和taskEXIT-CRITICAL-FROM-ISR" class="headerlink" title="5.3 taskENTER_CRITICAL_FROM_ISR()和taskEXIT_CRITICAL_FROM_ISR()"></a>5.3 taskENTER_CRITICAL_FROM_ISR()和taskEXIT_CRITICAL_FROM_ISR()</h2><p>用于在中断函数中进入/退出临界区,作用和上面一样</p>
+<h2 id="5-4-挂起-恢复-删除任务函数"><a href="#5-4-挂起-恢复-删除任务函数" class="headerlink" title="5.4 挂起/恢复/删除任务函数"></a>5.4 挂起/恢复/删除任务函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void vTaskSuspend( TaskHandle_t xTaskToSuspend );  　　     //挂起一个任务,参数为挂起任务的句柄,如果为NULL则表示挂起自身任务</span><br><span class="line">void vTaskResume( TaskHandle_t xTaskToResume );   　　　　  //恢复一个任务</span><br><span class="line">BaseType_t xTaskResumeFromISR( TaskHandle_t xTaskToResume);//从中断函数中恢复一个任务,返回1表示恢复成功</span><br><span class="line">void vTaskDelete( TaskHandle_t xTaskToDelete );    　　    //删除一个任务,如果从任务函数中退出的话,则需要调用vTaskDelete(NULL)来删除自身任务</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-5-vTaskDelay-延时函数"><a href="#5-5-vTaskDelay-延时函数" class="headerlink" title="5.5 vTaskDelay()延时函数"></a>5.5 vTaskDelay()延时函数</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void vTaskDelay( const TickType_t xTicksToDelay );    //参数表示延时的系统滴答数</span><br></pre></td></tr></table></figure>
+
+<p>比如延时500ms可以写为: vTaskDelay( 500/portTICK_RATE_MS );<br>portTICK_RATE_MS是个宏,表示当前系统的1个滴答需要多少ms,而500/portTICK_RATE_MS则表示当前500ms需要多少个系统滴答数.</p>
+<h1 id="6-队列"><a href="#6-队列" class="headerlink" title="6. 队列"></a>6. 队列</h1><h2 id="6-1-简介"><a href="#6-1-简介" class="headerlink" title="6.1 简介"></a>6.1 简介</h2><p>队列用于任务与任务或者任务与中断之间的通信.比如key任务检测到按键按下时,则可以通过队列向lcd显示任务发送信息,使得lcd切换界面.<br>队列采用先进先出存储机制.队列发送数据可以有两种方式:浅拷贝、深拷贝.</p>
+<ul>
+<li>数据量不大的情况下,都使用深拷贝(会分配新的空间,并进行数据拷贝,缺点在于耗时)</li>
+<li>数据量大的情况下,都使用浅拷贝(通过指针方式,前提是要发送的数据必须不会被释放的)</li>
+</ul>
+<h2 id="6-2-队列的优点"><a href="#6-2-队列的优点" class="headerlink" title="6.2 队列的优点"></a>6.2 队列的优点</h2><p>队列可以通过任何任务或者中断进行访问,可以随时存取数据消息.<br>并且出入队的时候可以进行任务阻塞,比如某个任务进行读消息出队时,如果没有消息,则可以实现进入休眠状态,直到有消息才唤醒任务.</p>
+<h2 id="6-3-队列创建删除相关API"><a href="#6-3-队列创建删除相关API" class="headerlink" title="6.3 队列创建删除相关API"></a>6.3 队列创建删除相关API</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">QueueHandle_t xQueueCreate( uxQueueLength, uxItemSize );    </span><br><span class="line">  //动态创建队列,内存会交给RTOS自动分配</span><br><span class="line">  // uxQueueLength:队列长度(表示队列中最大多少条消息),uxItemSize:每个队列消息的长度(以字节为单位)</span><br><span class="line">  //返回值: NULL(0, 表示分配失败),非0(表示返回该队列分配好的地址)</span><br><span class="line">  //注意:使用自动分配时,需要配置configSUPPORT_DYNAMIC_ALLOCATION宏为1,否则只能由用户来分配.</span><br><span class="line"></span><br><span class="line">QueueHandle_t xQueueCreateStatic( uxQueueLength, uxItemSize, pucQueueStorage, pxQueueBuffer );</span><br><span class="line">  //静态创建队列,内存需要由用户事先分配好</span><br><span class="line">  // uxQueueLength:队列长度(表示队列中最大多少条消息),uxItemSize:每个队列消息的长度(以字节为单位)</span><br><span class="line">  // pucQueueStorage:指向用户事先分配好的存储区内存(必须为uint8_t型)</span><br><span class="line">  // pxQueueBuffer:指向队列结构体,用来提供给RTOS初始化.然后给用户使用</span><br><span class="line">  //返回值: NULL(0, 表示分配失败),非0(表示返回该队列分配好的地址)</span><br><span class="line"></span><br><span class="line">vQueueDelete( QueueHandle_t xQueue );</span><br><span class="line">  //删除队列,并释放空间</span><br><span class="line"></span><br><span class="line">xQueueReset( xQueue );</span><br><span class="line">  //将队列里的消息清空一次,也就是恢复初始状态</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-4队列出入队相关API"><a href="#6-4队列出入队相关API" class="headerlink" title="6.4队列出入队相关API"></a>6.4队列出入队相关API</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">xQueueSend( xQueue, pvItemToQueue, xTicksToWait );</span><br><span class="line">  //插入队尾,和xQueueSendToBack函数效果一致</span><br><span class="line">  // xQueue:队列句柄</span><br><span class="line">  //PvItemToQueue:消息数据,会通过数据拷贝到队列中,如果想使用浅拷贝,则可以发送一个变量来存储要真正发送的缓冲区地址即可.</span><br><span class="line">  // xTicksToWait:阻塞时间,单位为RTOS时钟滴答值,如果configTICK_RATE_HZ是1000,则填入的值表示阻塞的是多少ms,否则的话需要通过X/portTICK_RATE_MS来转换一下,才能实现阻塞Xms.</span><br><span class="line">  //xTicksToWait==0:表示入队满了,则直接退出该函数</span><br><span class="line">  // xTicksToWait==portMAX_DELAY:表示一直阻塞,直到队列有空位为止.</span><br><span class="line">  //注意: INCLUDE_vTaskSuspend宏必须为1,否则任务无法进入休眠状态实现阻塞效果.</span><br><span class="line">  //返回值: errQUEUE_FULL(队列已满) pdPASS(通过)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">xQueueSendToFront( xQueue, pvItemToQueue, xTicksToWait );</span><br><span class="line">  //插入队头,参数和上面描述一致</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">xQueueSendToBack( xQueue, pvItemToQueue, xTicksToWait );</span><br><span class="line">  //插入队尾,参数和上面描述一致</span><br><span class="line"></span><br><span class="line">xQueueOverwrite( xQueue, pvItemToQueue );</span><br><span class="line">  //将之前未出队的旧数据全部清空,然后再入队,该函数适用于长度为1的队列</span><br><span class="line"></span><br><span class="line">xQueueReceive( xQueue, pvBuffer, xTicksToWait );</span><br><span class="line">  //从队列头部读出一个消息,并且这个消息会出队(删除掉)</span><br><span class="line"></span><br><span class="line">xQueuePeek( xQueue, pvBuffer, xTicksToWait );</span><br><span class="line">  //从队列头部读出一个消息,但是这个消息不会出队(不会删除)</span><br></pre></td></tr></table></figure>
+
+<p>PS:这些API函数只能用于任务里调用,如果要在中断服务函数中调用,则在函数名后添加FromQueue即可,比如xQueueSendFromQueue()函数</p>
+<h2 id="6-5-中断发送-读取消息队列时-要注意的事情"><a href="#6-5-中断发送-读取消息队列时-要注意的事情" class="headerlink" title="6.5 中断发送/读取消息队列时,要注意的事情"></a>6.5 中断发送/读取消息队列时,要注意的事情</h2><p>使用中断相关的读写队列相关的API时,第3个参数是不一样的,比如xQueueSendFromISR():</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xQueueSendFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken )</span><br></pre></td></tr></table></figure>
+
+<p>PxHigherPriorityTaskWoken<br>用来标记退出该函数后是否需要进行任务切换,因为我们发送队列时,有可能会将某个阻塞任务退出阻塞态,而此时又在中断中,所以当PxHigherPriorityTaskWoken为pdTRUE时,我们则必须进行一次任务切换.</p>
+<p>可以通过portYIELD_FROM_ISR()来进行任务切换,并且我们不需要去判断PxHigherPriorityTaskWoken是否为pdTRUE,因为该函数内部有判断的,如下图所示:<br><img src="https://img2018.cnblogs.com/blog/1182576/201903/1182576-20190303001247845-2029905881.png" alt="image"></p>
+<p>来个中断函数发送队列示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">extern QueueHandle_t Message_Queue;                          //信息队列句柄</span><br><span class="line"></span><br><span class="line">void USART1_IRQHandler(void)                       //串口1中断服务程序</span><br><span class="line">&#123;</span><br><span class="line">    BaseType_t xHigherPriorityTaskWoken;          //定义任务切换标志位</span><br><span class="line">    if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET) </span><br><span class="line">    &#123;</span><br><span class="line">        //处理中断接收数据</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (Message_Queue!=NULL)             //判断Message_Queue是否已创建</span><br><span class="line">    &#123;</span><br><span class="line">        xQueueSendFromISR(Message_Queue, RX_BUF,&amp;xHigherPriorityTaskWoken);</span><br><span class="line">        //向队列Message_Queue中发送RX_BUF</span><br><span class="line">        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);</span><br><span class="line">        //通过portYIELD_FROM_ISR()判断是否需要切换任务</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>PS:尽量将portYIELD_FROM_ISR()写在中断函数末尾处</p>
+<h2 id="6-6示例-任务之间的伪代码"><a href="#6-6示例-任务之间的伪代码" class="headerlink" title="6.6示例-任务之间的伪代码"></a>6.6示例-任务之间的伪代码</h2><p>按键任务向打印任务发送按键消息队列,代码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">QueueHandle_t Key_Queue; //按键值消息队列句柄</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">   //...省略N行代码</span><br><span class="line"></span><br><span class="line">   Key_Queue = xQueueCreate(1,sizeof(u8)); //创建消息Key_Queue,长度为1</span><br><span class="line">   </span><br><span class="line">   //创建两个任务:key_task()、print_task()</span><br><span class="line">   //...省略N行代码</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">key_task()    //获取按键值</span><br><span class="line">&#123;</span><br><span class="line">    while(1)</span><br><span class="line">　　&#123;</span><br><span class="line">　　　　key=KEY_Scan(0); //扫描按键</span><br><span class="line">　　　　if((Key_Queue!=NULL)&amp;&amp;(key))  //消息队列Key_Queue创建成功,并且按键被按下</span><br><span class="line">　　　　&#123;</span><br><span class="line">　　　　　　err=xQueueSend(Key_Queue,&amp;key,10);</span><br><span class="line">　　　　　　if(err==errQUEUE_FULL) //发送按键值</span><br><span class="line">　　　　　　&#123;</span><br><span class="line">　　　　　　　　printf(&quot;队列Key_Queue已满，数据发送失败!\r\n&quot;);</span><br><span class="line">　　　　　　&#125;</span><br><span class="line">　　　　&#125;</span><br><span class="line">　　　　vTaskDelay(10); //延时10个时钟节拍</span><br><span class="line">　　&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">print_task()    //打印按键值</span><br><span class="line">&#123;</span><br><span class="line">　　u8 key;</span><br><span class="line">　　while(1)</span><br><span class="line">　　&#123;</span><br><span class="line">　　　　if(Key_Queue!=NULL)</span><br><span class="line">　　　　&#123;</span><br><span class="line">　　　　　　if(xQueueReceive(Key_Queue,&amp;key,portMAX_DELAY))//请求消息Key_Queue</span><br><span class="line">　　　　　　&#123;</span><br><span class="line">　　　　　　　　printf(&quot;key=%d\r\n&quot;,key);</span><br><span class="line">　　　　　　&#125;</span><br><span class="line">　　　　&#125; </span><br><span class="line">　　　　vTaskDelay(10); //延时10个时钟节拍    </span><br><span class="line">　　&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="7-RTOS软件定时器"><a href="#7-RTOS软件定时器" class="headerlink" title="7. RTOS软件定时器"></a>7. RTOS软件定时器</h1><h2 id="7-1简介"><a href="#7-1简介" class="headerlink" title="7.1简介"></a>7.1简介</h2><p>在之前的任务创建的时候有讲到过,RTOS会自动创建一个优先级<strong>configMAX_PRIORITIES-1</strong>的软件定时器服务任务(管理定时器的).</p>
+<p>所以我们写一个定时器回调函数时,则会被该定时器服务任务调用,所以在我们软件定时器函数中不能使用** vTaskDelay() **阻塞之类的API函数,否则会将系统中的定时器服务函数给阻塞掉.</p>
+<h2 id="7-2-FreeRTOSConfig-h相关的定时器配置"><a href="#7-2-FreeRTOSConfig-h相关的定时器配置" class="headerlink" title="7.2 FreeRTOSConfig.h相关的定时器配置"></a>7.2 FreeRTOSConfig.h相关的定时器配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#define configUSE_TIMERS                1 　　   //为1时启用软件定时器</span><br><span class="line">#define configTIMER_TASK_PRIORITY       31 　    //设置软件定时器优先级可设置的值范围为0~31</span><br><span class="line">#define configTIMER_QUEUE_LENGTH        5 　　 　//软件定时器队列长度</span><br><span class="line">#define configTIMER_TASK_STACK_DEPTH    200     //设置每个软件定时器任务堆栈大小</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-3定时创建相关API"><a href="#7-3定时创建相关API" class="headerlink" title="7.3定时创建相关API"></a>7.3定时创建相关API</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">TimerHandle_t xTimerCreateStatic(</span><br><span class="line">    const char * const pcTimerName,            //定时器字符串别名</span><br><span class="line">    const TickType_t xTimerPeriodInTicks,      //需要定时的周期值,比如通过200/ portTICK_RATE_MS来转换实现定时200毫秒</span><br><span class="line">    const UBaseType_t uxAutoReload, 　         //是否重载(周期性/单次性),若为pdTRUE(1)表示为周期性,为pdFALSE(0)表示为单次</span><br><span class="line">    void * const pvTimerID,                    //定时器ID号,一般用于多个定时器共用一个定时器回调函数,否则填0即可</span><br><span class="line">    TimerCallbackFunction_t pxCallbackFunction //定时器回调函数</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xTimerDelete( xTimer, xTicksToWait );        //删除定时器</span><br><span class="line">//xTicksToWait:指定该定时器在多少时钟节拍数之前删除掉,为0则立即删除,一般设为100(如果设为0,则如果在该操作之前还有其它设置定时器操作的话,则不会进行阻塞等待,从而返回false)</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-4-定时器其它常用API"><a href="#7-4-定时器其它常用API" class="headerlink" title="7.4 定时器其它常用API"></a>7.4 定时器其它常用API</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">xTimerChangePeriod( xTimer, xNewPeriod, xTicksToWait );</span><br><span class="line">  //修改定时器周期,在中断中则使用xTimerChangePeriodFromISR()</span><br><span class="line">  // xNewPeriod:要修改的周期值 </span><br><span class="line">  //xTicksToWait:指定该定时器在多少时钟节拍数之前修改好,为0则立即删除</span><br><span class="line">  //xTimerReset( xTimer, xTicksToWait );</span><br><span class="line">  //复位定时器,让定时器重新计数,在中断中则使用xTimerResetFromISR()</span><br><span class="line">  // xTicksToWait:和上面内容类似</span><br><span class="line"></span><br><span class="line">xTimerStart( xTimer, xTicksToWait );</span><br><span class="line">  //启动定时器,如果定时器正在运行的话调用该函数的结果和xTimerReset()一样, 在中断中则使用xTimerResetFromISR ()</span><br><span class="line"></span><br><span class="line">xTimerStop( xTimer, xTicksToWait );</span><br><span class="line">  //停止定时器, 在中断中则使用xTimerStopFromISR ()</span><br></pre></td></tr></table></figure>
+
+<p>PS:在中断中使用定时器API时,同样和队列一样,也需要在函数末尾通过portYIELD_FROM_ISR()进行一次任务切换判断</p>
+<h1 id="8-信号量"><a href="#8-信号量" class="headerlink" title="8. 信号量"></a>8. 信号量</h1><p>在项目中我们一般用二值信号量,用来同步数据的.</p>
+<p>比如任务A要向任务B发送一个很大的数据buf,而用队列的话会进行复制拷贝,从而占用大量时间.</p>
+<p>此时我们不妨定义一个全局数据buf,任务A修改这个buf,发送一个信号量给任务B,任务B就去读取这个全局数据buf即可.从而省去了队列复制拷贝的时间.</p>
+<h2 id="8-1定义信号量举例"><a href="#8-1定义信号量举例" class="headerlink" title="8.1定义信号量举例"></a>8.1定义信号量举例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SemaphoreHandle_t BinarySemaphore;          //二值信号量句柄</span><br><span class="line">BinarySemaphore=xSemaphoreCreateBinary();   //创建二值信号量</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-2在中断中发送信号量过程"><a href="#8-2在中断中发送信号量过程" class="headerlink" title="8.2在中断中发送信号量过程"></a>8.2在中断中发送信号量过程</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BaseType_t xHigherPriorityTaskWoken;</span><br><span class="line">xSemaphoreGiveFromISR(BinarySemaphore,&amp;xHigherPriorityTaskWoken);//发送二值信号量</span><br><span class="line">portYIELD_FROM_ISR(xHigherPriorityTaskWoken);  //如果需要的话进行一次任务切换</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="8-3在任务中发送信号量过程"><a href="#8-3在任务中发送信号量过程" class="headerlink" title="8.3在任务中发送信号量过程"></a>8.3在任务中发送信号量过程</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreGive(BinarySemaphore);  //返回值: pdPASS(0, 表示发送成功,如果信号量一直未处理,则会返回值失败FULL)</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-4-在任务中接收信号量过程"><a href="#8-4-在任务中接收信号量过程" class="headerlink" title="8.4 在任务中接收信号量过程"></a>8.4 在任务中接收信号量过程</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">err = xSemaphoreTake(BinarySemaphore,portMAX_DELAY);          //获取信号量</span><br><span class="line">// portMAX_DELAY:进入阻塞态一直等待获取</span><br><span class="line">//返回值为pdTRUE(OK)  pdFALSE(err)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/STM32/" rel="tag"># STM32</a>
+          
+            <a href="/tags/FreeRTOS/" rel="tag"># FreeRTOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/31/STM32F105RC新建工程，移植FreeRTOS/" rel="next" title="STM32F105RC新建工程，移植FreeRTOS">
+                <i class="fa fa-chevron-left"></i> STM32F105RC新建工程，移植FreeRTOS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/IMG_20150705_122453_2.jpg" alt="zhou">
+            
+              <p class="site-author-name" itemprop="name">zhou</p>
+              <p class="site-description motion-element" itemprop="description">周善宝的个人博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-基础知识"><span class="nav-text">1. 基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1配置工程时-选择memMang时-一般使用heap-4-c"><span class="nav-text">1.1配置工程时,选择memMang时,一般使用heap_4.c</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-添加头文件路径"><span class="nav-text">1.2 添加头文件路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-FreeRTOSConfig-h配置介绍"><span class="nav-text">2. FreeRTOSConfig.h配置介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-FreeRTOS任务状态"><span class="nav-text">3. FreeRTOS任务状态</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-运行态"><span class="nav-text">3.1 运行态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-就绪态"><span class="nav-text">3.2 就绪态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-阻塞态"><span class="nav-text">3.3 阻塞态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-挂起态"><span class="nav-text">3.4 挂起态</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-FreeRTOS中断配置"><span class="nav-text">4. FreeRTOS中断配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-回忆stm32-NVIC中断"><span class="nav-text">4.1 回忆stm32 NVIC中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-抢占优先级和副优先级的区别"><span class="nav-text">4.2 抢占优先级和副优先级的区别:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-FreeRTOS中断配置宏"><span class="nav-text">4.3 FreeRTOS中断配置宏</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-任务常用API函数"><span class="nav-text">5.任务常用API函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-xTaskCreate创建任务函数"><span class="nav-text">5.1 xTaskCreate创建任务函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-taskENTER-CRITICAL-和taskEXIT-CRITICAL"><span class="nav-text">5.2 taskENTER_CRITICAL()和taskEXIT_CRITICAL()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-taskENTER-CRITICAL-FROM-ISR-和taskEXIT-CRITICAL-FROM-ISR"><span class="nav-text">5.3 taskENTER_CRITICAL_FROM_ISR()和taskEXIT_CRITICAL_FROM_ISR()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-挂起-恢复-删除任务函数"><span class="nav-text">5.4 挂起/恢复/删除任务函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-5-vTaskDelay-延时函数"><span class="nav-text">5.5 vTaskDelay()延时函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-队列"><span class="nav-text">6. 队列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-简介"><span class="nav-text">6.1 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-队列的优点"><span class="nav-text">6.2 队列的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-队列创建删除相关API"><span class="nav-text">6.3 队列创建删除相关API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4队列出入队相关API"><span class="nav-text">6.4队列出入队相关API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5-中断发送-读取消息队列时-要注意的事情"><span class="nav-text">6.5 中断发送/读取消息队列时,要注意的事情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-6示例-任务之间的伪代码"><span class="nav-text">6.6示例-任务之间的伪代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-RTOS软件定时器"><span class="nav-text">7. RTOS软件定时器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1简介"><span class="nav-text">7.1简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-FreeRTOSConfig-h相关的定时器配置"><span class="nav-text">7.2 FreeRTOSConfig.h相关的定时器配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3定时创建相关API"><span class="nav-text">7.3定时创建相关API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-4-定时器其它常用API"><span class="nav-text">7.4 定时器其它常用API</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-信号量"><span class="nav-text">8. 信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1定义信号量举例"><span class="nav-text">8.1定义信号量举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2在中断中发送信号量过程"><span class="nav-text">8.2在中断中发送信号量过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3在任务中发送信号量过程"><span class="nav-text">8.3在任务中发送信号量过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-在任务中接收信号量过程"><span class="nav-text">8.4 在任务中接收信号量过程</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhou</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

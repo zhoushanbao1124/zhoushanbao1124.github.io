@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="STM32,FreeRTOS,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. STM32工程创建">
+<meta name="keywords" content="STM32,FreeRTOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32F105RC新建工程，移植FreeRTOS">
+<meta property="og:url" content="http://yoursite.com/2019/05/31/STM32F105RC新建工程，移植FreeRTOS/index.html">
+<meta property="og:site_name" content="Home">
+<meta property="og:description" content="1. STM32工程创建">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-30T16:36:41.811Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="STM32F105RC新建工程，移植FreeRTOS">
+<meta name="twitter:description" content="1. STM32工程创建">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/31/STM32F105RC新建工程，移植FreeRTOS/">
+
+
+
+
+
+  <title>STM32F105RC新建工程，移植FreeRTOS | Home</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '141114564', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/31/STM32F105RC新建工程，移植FreeRTOS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhou">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/IMG_20150705_122453_2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">STM32F105RC新建工程，移植FreeRTOS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-31T00:26:49+08:00">
+                2019-05-31
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-31T00:36:41+08:00">
+                2019-05-31
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/STM32/" itemprop="url" rel="index">
+                    <span itemprop="name">STM32</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/STM32/FreeRTOS/" itemprop="url" rel="index">
+                    <span itemprop="name">FreeRTOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-STM32工程创建"><a href="#1-STM32工程创建" class="headerlink" title="1. STM32工程创建"></a>1. STM32工程创建</h1><a id="more"></a>
+<blockquote>
+<p>注：工程创建方法参照正点原子</p>
+</blockquote>
+<h2 id="1-1-准备"><a href="#1-1-准备" class="headerlink" title="1.1 准备"></a>1.1 准备</h2><ol>
+<li>开发环境，Keil MDK 5.26，<a href="https://www.keil.com/download/product/" target="_blank" rel="noopener">下载地址</a></li>
+<li>STM32F1 PACK包，<a href="https://www.keil.com/dd2/Pack/" target="_blank" rel="noopener">下载地址</a></li>
+<li>ST官方标准外设库，目前版本3.5.0，<a href="https://www.st.com/zh/embedded-software/stsw-stm32054.html" target="_blank" rel="noopener">下载地址</a></li>
+<li>开发板</li>
+</ol>
+<h2 id="1-2-开始"><a href="#1-2-开始" class="headerlink" title="1.2 开始"></a>1.2 开始</h2><h3 id="1-2-1-Keil环境"><a href="#1-2-1-Keil环境" class="headerlink" title="1.2.1 Keil环境"></a>1.2.1 Keil环境</h3><p>安装Keil环境，破解，安装STM32 F1 PACK包</p>
+<h3 id="1-2-2-创建工程"><a href="#1-2-2-创建工程" class="headerlink" title="1.2.2 创建工程"></a>1.2.2 创建工程</h3><ol>
+<li>创建文件夹为 STM32_F105RC-FreeRTOS</li>
+<li>在Template内创建文件夹USER、CORE、OBJ、STM32F10x_FWLib<blockquote>
+<ul>
+<li>USER 用来存放自己添加的代码</li>
+<li>CORE 用来存放核心文件和启动文件</li>
+<li>OBJ 是用来存放编译过程文件以及 hex 文件</li>
+<li>STM32F10x_FWLib 文件夹顾名思义用来存放 ST 官方提供的库函数源码文件</li>
+</ul>
+</blockquote>
+</li>
+<li>运行Keil，点击 MDK 的菜单： Project –&gt;New Uvision Project，然后将目录定位到刚才建立的文件夹 STM32_F105RC-FreeRTOS。工程命名为 STM32_F105RC-FreeRTOS，点击保存。 </li>
+<li>接下来会出现一个选择 CPU 的界面，就是选择我们的芯片型号。<br>STMicroelectronics-&gt;STM32F1 Series-&gt;STM32F105-&gt;STM32F105RCT6<blockquote>
+<p>特别注意： 一定要安装对应的器件 pack 才会显示这些内容哦！！</p>
+</blockquote>
+</li>
+<li>点击 OK， MDK 会弹出 Manage Run-Time Environment 对话框，直接点击 Cancel。<blockquote>
+<ul>
+<li>此时一个框架工程建立完毕，还需要添加启动代码，以及.c 文件等。</li>
+<li>修改默认调试工具：魔术棒图标-&gt;Debug-&gt;下拉ST-Link Debugger </li>
+<li>修改下载后自动复位运行：魔术棒图标-&gt;Debug-&gt;右侧Setting-&gt;Flash Download-&gt;勾选Reset and Run </li>
+<li>调整工程输出文件目录</li>
+<li><ul>
+<li>魔术棒图标-&gt;Output-&gt;Select Folder for Objects…-&gt;选择OBJ目录。同时勾选Create HEX File</li>
+</ul>
+</li>
+<li><ul>
+<li>魔术棒图标-&gt;Listing-&gt;Select Folder for Objects…-&gt;选择OBJ目录</li>
+</ul>
+</li>
+<li><ul>
+<li>删除工程目录下的Objects、Listings文件夹</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<h3 id="1-2-3-移植固件库包"><a href="#1-2-3-移植固件库包" class="headerlink" title="1.2.3 移植固件库包"></a>1.2.3 移植固件库包</h3><ol>
+<li>打开官方固件库包，进入目录 STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\STM32F10x_StdPeriph_Driver，将将目录下面的 src，inc 文件夹 copy 到我们刚才建立的 STM32F10x_FWLib 文件夹下面<blockquote>
+<ul>
+<li>src 存放的是固件库的.c 文件</li>
+<li>inc 存放的是对应的.h 文件</li>
+</ul>
+</blockquote>
+</li>
+<li>打开官方固件库包，进入目录<br>STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\CoreSupport 下面，将文件 core_cm3.c 和 文件 core_cm3.h 复制到 CORE 内</li>
+<li>打开官方固件库包，进入目录 STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm 下面，将里面 startup_stm32f10x_cl.s 文件复制到 CORE 内<blockquote>
+<ul>
+<li>STM32固件库Libraries\CMSIS\Core\CM3\startup\arm中启动文件的文件名英文缩写意义：</li>
+<li>cl：互联型产品， stm32f105/107 系列</li>
+<li>vl：超值型产品， stm32f100 系列</li>
+<li>xl：超高密度（容量） 产品， stm32f101/103 系列</li>
+<li>ld：低密度产品， FLASH 小于 64K</li>
+<li>md：中等密度产品， FLASH=64 or 128</li>
+<li>hd：高密度产品， FLASH 大于 128</li>
+</ul>
+</blockquote>
+</li>
+<li>进入目录 STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x，将文件 stm32f10x.h， system_stm32f10x.c， system_stm32f10x.h，复制到 USER 内</li>
+<li>进入目录 STM32F10x_StdPeriph_Lib_V3.5.0\Project\STM32F10x_StdPeriph_Template，将文件 main.c， stm32f10x_conf.h， stm32f10x_it.c， stm32f10x_it.h 复制到 USER 内</li>
+</ol>
+<h3 id="1-2-4-将固件库文件添加到工程"><a href="#1-2-4-将固件库文件添加到工程" class="headerlink" title="1.2.4 将固件库文件添加到工程"></a>1.2.4 将固件库文件添加到工程</h3><ol>
+<li>右键点击 Target1，选择 Manage Project Items。</li>
+<li>Project Targets 一栏，我们将 Target 名字修改为 STM32_F105RC-FreeRTOS。然后在 Groups 一栏删掉一个 Source Group1，建立三个 Groups： USER,CORE,FWLIB。然后点击 OK。</li>
+<li>右键点击点击 STM32_F105RC-FreeRTOS， 选择 Manage Project Itmes， 然后选择需要添加文件的 Group，这里第一步我们选择 FWLIB，然后点击右边的 Add Files,定位到我们刚才建立的目录 STM32F10x_FWLib/src 下面，将里面所有的文件选中(Ctrl+A)，然后点击 Add，然后 Close.可以看到 Files 列表下面包含我们添加的文件。<blockquote>
+<p>如果只用到了其中的某个外设，可以不用添加没有用到的外设的库文件。例如只用 GPIO，可以只用添加 stm32f10x_gpio.c 而其他的可以不用添加。这里全部添加进来是为了后面方便，不用每次添加，当然4这样的坏处是工程太大，编译起来速度慢，可以自行选择。 </p>
+</blockquote>
+</li>
+<li>用同样的方法，将 Groups 定位到 CORE 下面，添加需要的文件：core_cm3.c， startup_stm32f10x_hd.s <blockquote>
+<p>注意，默认添加的时候文件类型为.c,也就是添加 startup_stm32f10x_hd.s 启动文件的时候，你需要选择文件类型为 All files 才能看得到这个文件</p>
+</blockquote>
+</li>
+<li>将 Groups 定位到 USER 下面，添加需要的文件：main.c， stm32f10x_it.c，system_stm32f10x.c</li>
+<li>点击OK，返回主界面</li>
+</ol>
+<h3 id="1-2-5-添加头文件"><a href="#1-2-5-添加头文件" class="headerlink" title="1.2.5 添加头文件"></a>1.2.5 添加头文件</h3><ol>
+<li>点击魔术棒-&gt;C/C++-&gt;Include Pash-&gt;点击…</li>
+<li>添加目录 ./COER  ./USER  ./STM32F10x_FWLib/inc</li>
+</ol>
+<h3 id="1-2-6-添加宏定义"><a href="#1-2-6-添加宏定义" class="headerlink" title="1.2.6 添加宏定义"></a>1.2.6 添加宏定义</h3><ol>
+<li>点击魔术棒-&gt;C/C++-&gt;Define</li>
+<li>填入“STM32F10X_CL,USE_STDPERIPH_DRIVER”<blockquote>
+<p>不同芯片，STM32F10X_CL后缀不同，具体参见 章节1.3.3 3.</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="1-2-7-修改main-c"><a href="#1-2-7-修改main-c" class="headerlink" title="1.2.7 修改main.c"></a>1.2.7 修改main.c</h3><p>将内容改为以下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stm32f10x.h&quot;</span><br><span class="line"></span><br><span class="line">// 简单延时函数</span><br><span class="line">void Delay(u32 count)</span><br><span class="line">&#123;</span><br><span class="line">    u32 i=0;</span><br><span class="line">    for(;i&lt;count;i++);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 主函数</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    // GPIO初始化</span><br><span class="line">    GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);</span><br><span class="line">    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2; //LED0--&gt;PD.2 端口配置</span><br><span class="line">    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; //推挽输出</span><br><span class="line">    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; //IO 口速度为 50MHz</span><br><span class="line">    GPIO_Init(GPIOD, &amp;GPIO_InitStructure); //根据设定参数初始化 GPIOD.2</span><br><span class="line">    GPIO_SetBits(GPIOD,GPIO_Pin_2); //PD.2 输出高</span><br><span class="line">    // 循环控制D2高低电平</span><br><span class="line">    while(1)</span><br><span class="line">    &#123;</span><br><span class="line">        GPIO_SetBits(GPIOD,GPIO_Pin_2);</span><br><span class="line">        Delay(3000000);</span><br><span class="line">        GPIO_ResetBits(GPIOD,GPIO_Pin_2);</span><br><span class="line">        Delay(3000000);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-8-下载运行"><a href="#1-2-8-下载运行" class="headerlink" title="1.2.8 下载运行"></a>1.2.8 下载运行</h3><p>LED灯闪烁</p>
+<h2 id="1-3-串口打印"><a href="#1-3-串口打印" class="headerlink" title="1.3 串口打印"></a>1.3 串口打印</h2><h3 id="1-3-1-串口初始化代码"><a href="#1-3-1-串口初始化代码" class="headerlink" title="1.3.1 串口初始化代码"></a>1.3.1 串口初始化代码</h3><ol>
+<li><p>在main.c增加串口初始化代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">//初始化 IO 串口1</span><br><span class="line">//bound: 波特率</span><br><span class="line">void USART1_init(u32 bound)</span><br><span class="line">&#123;</span><br><span class="line">    GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">    USART_InitTypeDef USART_InitStructure;</span><br><span class="line">#if EN_USART1_RX //如果使能了接收</span><br><span class="line">    NVIC_InitTypeDef NVIC_InitStructure;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">    //①串口时钟使能， GPIO 时钟使能，复用时钟使能</span><br><span class="line">    RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1 |</span><br><span class="line">                         RCC_APB2Periph_GPIOA, ENABLE); //使能 USART1,GPIOA 时钟</span><br><span class="line">    RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);</span><br><span class="line"></span><br><span class="line">    //②串口复位</span><br><span class="line">    //USART_DeInit(USART1); //复位串口 1</span><br><span class="line">    //③GPIO 端口模式设置</span><br><span class="line">    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9; //ISART1_TX PA.9</span><br><span class="line">    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; //复用推挽输出</span><br><span class="line">    GPIO_Init(GPIOA, &amp;GPIO_InitStructure); //初始化 GPIOA.9</span><br><span class="line">    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10; //USART1_RX PA.10</span><br><span class="line">    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING; //浮空输入</span><br><span class="line">    GPIO_Init(GPIOA, &amp;GPIO_InitStructure); //初始化 GPIOA.10</span><br><span class="line">    //④串口参数初始化</span><br><span class="line">    USART_InitStructure.USART_BaudRate = bound; //波特率设置</span><br><span class="line">    USART_InitStructure.USART_WordLength = USART_WordLength_8b; //字长为 8 位</span><br><span class="line">    USART_InitStructure.USART_StopBits = USART_StopBits_1; //一个停止位</span><br><span class="line">    USART_InitStructure.USART_Parity = USART_Parity_No; //无奇偶校验位</span><br><span class="line">    USART_InitStructure.USART_HardwareFlowControl</span><br><span class="line">                        = USART_HardwareFlowControl_None; //无硬件数据流控制</span><br><span class="line">    USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;//收发模式</span><br><span class="line">    USART_Init(USART1, &amp;USART_InitStructure); //初始化串口</span><br><span class="line">#if EN_USART1_RX //如果使能了接收</span><br><span class="line">    //⑤初始化 NVIC</span><br><span class="line">    NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;</span><br><span class="line">    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3 ; //抢占优先级 3</span><br><span class="line">    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3; //子优先级 3</span><br><span class="line">    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //IRQ 通道使能</span><br><span class="line">    NVIC_Init(&amp;NVIC_InitStructure); //中断优先级初始化</span><br><span class="line">    //⑤开启中断</span><br><span class="line">    USART_ITConfig(USART1, USART_IT_RXNE, ENABLE); //开启中断</span><br><span class="line">#endif</span><br><span class="line">    //⑥使能串口</span><br><span class="line">    USART_Cmd(USART1, ENABLE); //使能串口</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>增加Printf映射代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#pragma import(__use_no_semihosting)</span><br><span class="line">struct __FILE</span><br><span class="line">&#123;</span><br><span class="line">    int handle;</span><br><span class="line">&#125;;</span><br><span class="line">FILE __stdout;</span><br><span class="line">void _sys_exit(int x)</span><br><span class="line">&#123;</span><br><span class="line">    x = x;</span><br><span class="line">&#125;</span><br><span class="line">int fputc(int ch,FILE *p)       //</span><br><span class="line">&#123;</span><br><span class="line">    USART_SendData(USART1,(u8)ch);</span><br><span class="line">    while(USART_GetFlagStatus(USART1, USART_FLAG_TXE)==RESET);</span><br><span class="line">    return ch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>包含头文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;  // FILE</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>main()中调用串口初始化，添加printf打印，发现串口打印乱码。找资料说是始终问题。打开stm32f10x.h，找到以下代码，手动定义时钟值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @brief In the following line adjust the value of External High Speed oscillator (HSE)</span><br><span class="line">   used in your application </span><br><span class="line">   </span><br><span class="line">   Tip: To avoid modifying this file each time you need to use different HSE, you</span><br><span class="line">        can define the HSE value in your toolchain compiler preprocessor.</span><br><span class="line">  */     </span><br><span class="line">// 根据板子实际情况手动设置时钟值</span><br><span class="line">#define HSE_VALUE    ((uint32_t)8000000) /*!&lt; Value of the External oscillator in Hz */</span><br><span class="line">#if !defined  HSE_VALUE</span><br><span class="line"> #ifdef STM32F10X_CL   </span><br><span class="line">  #define HSE_VALUE    ((uint32_t)25000000) /*!&lt; Value of the External oscillator in Hz */</span><br><span class="line"> #else </span><br><span class="line">  #define HSE_VALUE    ((uint32_t)8000000) /*!&lt; Value of the External oscillator in Hz */</span><br><span class="line"> #endif /* STM32F10X_CL */</span><br><span class="line">#endif /* HSE_VALUE */</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改时钟后，串口正常工作</p>
+</li>
+</ol>
+<h1 id="2-FreeRTOS移植"><a href="#2-FreeRTOS移植" class="headerlink" title="2. FreeRTOS移植"></a>2. FreeRTOS移植</h1><h2 id="2-1-准备"><a href="#2-1-准备" class="headerlink" title="2.1 准备"></a>2.1 准备</h2><ol>
+<li>上一步中建立好的工程 STM32_F105RC-FreeRTOS</li>
+<li><a href="https://sourceforge.net/projects/freertos/files/latest/download?source=files" target="_blank" rel="noopener">FreeRTOS源码</a>，运行freertos.exe自解压</li>
+</ol>
+<h2 id="2-2-开始"><a href="#2-2-开始" class="headerlink" title="2.2 开始"></a>2.2 开始</h2><h3 id="2-2-1-移植文件"><a href="#2-2-1-移植文件" class="headerlink" title="2.2.1 移植文件"></a>2.2.1 移植文件</h3><ol>
+<li>在 STM32_F105RC-FreeRTOS工程文件夹 中新建文件夹FreeRTOS</li>
+<li>进入OS源码路径FreeRTOSv10.2.1\FreeRTOS\Source，将目录内include文件夹，及所有*.c文件复制到刚创建的FreeRTOS文件夹内<blockquote>
+<p>这些是平台无关的代码，所有平台都需要使用的</p>
+</blockquote>
+</li>
+<li>进入OS源码路径FreeRTOSv10.2.1\FreeRTOS\Source\protable\MemMang目录。复制heep_2.c到刚创建的FreeRTOS文件夹内<blockquote>
+<p>该目录下是内存管理的相关代码</p>
+<ul>
+<li>heep_1.c只能分配内存而不能释放内存。</li>
+<li>heep_2.c可以分配和释放内存但不能合并空闲内存块。</li>
+<li>heep_3.c简单的封装了线程安全版的标准C语言malloc和free函数。</li>
+<li>heep_4.c可以合并相邻的空闲内存块。</li>
+<li>heep_5.c可以合并相邻的空闲内存块，且可以管理多个内存。</li>
+</ul>
+</blockquote>
+</li>
+<li>目标平台是Keil，打开FreeRTOSv10.2.1\FreeRTOS\Source\protable\Keil文件夹看到如下文件“See-also-the-RVDS-directory.txt”。因此打开FreeRTOSv10.2.1\FreeRTOS\Source\portable\RVDS\，根据型号进入目录 \ARM_CM3\，复制文件port.c到刚创建的FreeRTOS文件夹内，复制文件portmacro.h到刚创建的FreeRTOS\include文件夹内<blockquote>
+<p>FreeRTOSv10.2.1\FreeRTOS\Source\portable\RVDS路径下有不同的型号，根据实际情况选择</p>
+<ul>
+<li>ARM_CA9</li>
+<li>ARM_CM0</li>
+<li>ARM_CM3</li>
+<li>ARM_CM4_MPU</li>
+<li>ARM_CM4F</li>
+<li>ARM_CM7</li>
+<li>ARM7_LPC21xx</li>
+</ul>
+</blockquote>
+</li>
+<li>进入路径FreeRTOSv10.2.1\FreeRTOS\Demo，由于使用Keil+STM32F105RC，所以进入CORTEX_STM32F103_Keil，复制FreeRTOSConfig.h到刚创建的FreeRTOS\include文件夹内</li>
+</ol>
+<h3 id="2-2-2-将OS文件添加到工程"><a href="#2-2-2-将OS文件添加到工程" class="headerlink" title="2.2.2 将OS文件添加到工程"></a>2.2.2 将OS文件添加到工程</h3><ol>
+<li>打开Keil工程，Project Target上右键STM32_F105RC-FreeRTOS，选择 Manage Project Items。</li>
+<li>在 Groups 一栏增加 FreeRTOS 分组。然后点击 Add File，将FreeRTOS文件夹内所有*.c添加。</li>
+<li>点击OK。</li>
+</ol>
+<h3 id="2-2-3-添加头文件"><a href="#2-2-3-添加头文件" class="headerlink" title="2.2.3 添加头文件"></a>2.2.3 添加头文件</h3><ol>
+<li>点击魔术棒-&gt;C/C++-&gt;Include Pash-&gt;点击…</li>
+<li>添加目录 .\FreeRTOS\include</li>
+</ol>
+<h3 id="2-2-4-修改"><a href="#2-2-4-修改" class="headerlink" title="2.2.4 修改"></a>2.2.4 修改</h3><ol>
+<li><p>打开FreeRTOSConfig.h文件，在最后(#endif前)添加宏定义，这些宏将Freertos的这三个回调跟stm32官方的对应起来，这样就不用修改启动文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define vPortSVCHandler             SVC_Handler</span><br><span class="line">#define xPortPendSVHandler          PendSV_Handler</span><br><span class="line">#define xPortSysTickHandler         SysTick_Handler</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>同时需要将stm32f10x_it.c里边对应的三个函数注释掉或者加上weak关键字。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">__weak void SVC_Handler(void)</span><br><span class="line">__weak void PendSV_Handler(void)</span><br><span class="line">__weak void SysTick_Handler(void)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开FreeRTOSConfig.h文件，在最后(#endif前)添加宏定义</p>
+<blockquote>
+<p>此宏定义作用未知，不加编译会报错</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define configUSE_MUTEXES       1</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="2-2-5-包含头文件"><a href="#2-2-5-包含头文件" class="headerlink" title="2.2.5 包含头文件"></a>2.2.5 包含头文件</h3><p>在使用FreeRTOS的文件内包含头文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// FreeRTOS相关头文件</span><br><span class="line">#include &quot;FreeRTOS.h&quot;</span><br><span class="line">#include &quot;task.h&quot;       // 创建任务</span><br><span class="line">#include &quot;queue.h&quot;      // 队列操作</span><br><span class="line">#include &quot;semphr.h&quot;     // 信号量</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3-测试"><a href="#2-3-测试" class="headerlink" title="2.3 测试"></a>2.3 测试</h2><p>修改main.c如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stm32f10x.h&quot;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">// FreeRTOS相关头文件</span><br><span class="line">#include &quot;FreeRTOS.h&quot;</span><br><span class="line">#include &quot;task.h&quot;       // 创建任务</span><br><span class="line">#include &quot;queue.h&quot;      // 队列操作</span><br><span class="line">#include &quot;semphr.h&quot;     // 信号量</span><br><span class="line"></span><br><span class="line">// 几个打印任务中计数值</span><br><span class="line">u32 g_printf1_conter = 0;</span><br><span class="line">u32 g_printf2_conter = 0;</span><br><span class="line">u32 g_printf3_conter = 0;</span><br><span class="line"></span><br><span class="line">// 映射Printf相关</span><br><span class="line">#pragma import(__use_no_semihosting)</span><br><span class="line">struct __FILE</span><br><span class="line">&#123;</span><br><span class="line">    int handle;</span><br><span class="line">&#125;;</span><br><span class="line">FILE __stdout;</span><br><span class="line">void _sys_exit(int x)</span><br><span class="line">&#123;</span><br><span class="line">    x = x;</span><br><span class="line">&#125;</span><br><span class="line">int fputc(int ch,FILE *p)       //?úê1ó?printfê±?μí3×??ˉì?ó?′?oˉêy</span><br><span class="line">&#123;</span><br><span class="line">    USART_SendData(USART1,(u8)ch);</span><br><span class="line">    while(USART_GetFlagStatus(USART1, USART_FLAG_TXE)==RESET);</span><br><span class="line">    return ch;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 简单延时函数</span><br><span class="line">void Delay(u32 count)</span><br><span class="line">&#123;</span><br><span class="line">    static u32 i=0;</span><br><span class="line">    for(i = 0; i &lt; count; i++);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 延时1ms（不准确的延时）</span><br><span class="line">void Delay_ms(u32 ms)</span><br><span class="line">&#123;</span><br><span class="line">    static u32 i = 0;</span><br><span class="line">    for(i = 0; i &lt; ms; i++) &#123;</span><br><span class="line">        Delay(4000);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Led IO初始化</span><br><span class="line">void Led_Init(void)</span><br><span class="line">&#123;</span><br><span class="line">    // LED GPIO初始化</span><br><span class="line">    GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);</span><br><span class="line">    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2; //LED2--&gt;PD.2</span><br><span class="line">    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // 推挽输出</span><br><span class="line">    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; //IO 速度 50MHz</span><br><span class="line">    GPIO_Init(GPIOD, &amp;GPIO_InitStructure); // IO初始化</span><br><span class="line">    GPIO_SetBits(GPIOD, GPIO_Pin_2); // 设置电平PD.2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Led打开</span><br><span class="line">void Led_Open(void)</span><br><span class="line">&#123;</span><br><span class="line">    GPIO_ResetBits(GPIOD,GPIO_Pin_2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Led关闭</span><br><span class="line">void Led_Close(void)</span><br><span class="line">&#123;</span><br><span class="line">    GPIO_SetBits(GPIOD,GPIO_Pin_2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Led_Test(void *pvParameters)</span><br><span class="line">&#123;</span><br><span class="line">    while(1)</span><br><span class="line">    &#123;</span><br><span class="line">        Led_Open();</span><br><span class="line">        vTaskDelay( 100/portTICK_RATE_MS );</span><br><span class="line">        Led_Close();</span><br><span class="line">        vTaskDelay( 100/portTICK_RATE_MS );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//初始化 IO 串口1</span><br><span class="line">//bound: 波特率</span><br><span class="line">void USART1_init(u32 bound)</span><br><span class="line">&#123;</span><br><span class="line">    GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">    USART_InitTypeDef USART_InitStructure;</span><br><span class="line">#if EN_USART1_RX //如果使能了接收</span><br><span class="line">    NVIC_InitTypeDef NVIC_InitStructure;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">    //①串口时钟使能， GPIO 时钟使能，复用时钟使能</span><br><span class="line">    RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1 |</span><br><span class="line">                         RCC_APB2Periph_GPIOA, ENABLE); //使能 USART1,GPIOA 时钟</span><br><span class="line">    RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);</span><br><span class="line"></span><br><span class="line">    //②串口复位</span><br><span class="line">    //USART_DeInit(USART1); //复位串口 1</span><br><span class="line">    //③GPIO 端口模式设置</span><br><span class="line">    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9; //ISART1_TX PA.9</span><br><span class="line">    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; //复用推挽输出</span><br><span class="line">    GPIO_Init(GPIOA, &amp;GPIO_InitStructure); //初始化 GPIOA.9</span><br><span class="line">    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10; //USART1_RX PA.10</span><br><span class="line">    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING; //浮空输入</span><br><span class="line">    GPIO_Init(GPIOA, &amp;GPIO_InitStructure); //初始化 GPIOA.10</span><br><span class="line">    //④串口参数初始化</span><br><span class="line">    USART_InitStructure.USART_BaudRate = bound; //波特率设置</span><br><span class="line">    USART_InitStructure.USART_WordLength = USART_WordLength_8b; //字长为 8 位</span><br><span class="line">    USART_InitStructure.USART_StopBits = USART_StopBits_1; //一个停止位</span><br><span class="line">    USART_InitStructure.USART_Parity = USART_Parity_No; //无奇偶校验位</span><br><span class="line">    USART_InitStructure.USART_HardwareFlowControl</span><br><span class="line">                        = USART_HardwareFlowControl_None; //无硬件数据流控制</span><br><span class="line">    USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;//收发模式</span><br><span class="line">    USART_Init(USART1, &amp;USART_InitStructure); //初始化串口</span><br><span class="line">#if EN_USART1_RX //如果使能了接收</span><br><span class="line">    //⑤初始化 NVIC</span><br><span class="line">    NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;</span><br><span class="line">    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3 ; //抢占优先级 3</span><br><span class="line">    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3; //子优先级 3</span><br><span class="line">    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //IRQ 通道使能</span><br><span class="line">    NVIC_Init(&amp;NVIC_InitStructure); //中断优先级初始化</span><br><span class="line">    //⑤开启中断</span><br><span class="line">    USART_ITConfig(USART1, USART_IT_RXNE, ENABLE); //开启中断</span><br><span class="line">#endif</span><br><span class="line">    //⑥使能串口</span><br><span class="line">    USART_Cmd(USART1, ENABLE); //使能串口</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void USART_Test1(void *pvParameters)</span><br><span class="line">&#123;</span><br><span class="line">    while(1) &#123;</span><br><span class="line">        printf(&quot;USART 1 hello world %04d\r\n&quot;, g_printf1_conter++);</span><br><span class="line">        </span><br><span class="line">        vTaskDelay( 500/portTICK_RATE_MS );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">void USART_Test2(void *pvParameters)</span><br><span class="line">&#123;</span><br><span class="line">    while(1) &#123;</span><br><span class="line">        printf(&quot;USART 2 hello world %04d\r\n&quot;, g_printf2_conter++);</span><br><span class="line">        </span><br><span class="line">        vTaskDelay( 800/portTICK_RATE_MS );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">void USART_Test3(void *pvParameters)</span><br><span class="line">&#123;</span><br><span class="line">    while(1) &#123;</span><br><span class="line">        printf(&quot;USART 3 hello world %04d\r\n&quot;, g_printf3_conter++);</span><br><span class="line">        </span><br><span class="line">        vTaskDelay( 1100/portTICK_RATE_MS );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*-----------------------------------------------------------*/</span><br><span class="line">static void prvSetupHardware( void )</span><br><span class="line">&#123;</span><br><span class="line">    SystemInit();</span><br><span class="line"></span><br><span class="line">    Led_Init();</span><br><span class="line">    USART1_init(115200);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/************************************************************/</span><br><span class="line">// 主函数</span><br><span class="line">/************************************************************/</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    // 初始化硬件平台</span><br><span class="line">    prvSetupHardware();</span><br><span class="line"></span><br><span class="line">    printf(&quot;hello world\r\n&quot;);</span><br><span class="line"></span><br><span class="line">    Delay_ms(1000);</span><br><span class="line"></span><br><span class="line">    /* 建立任务 */</span><br><span class="line">    xTaskCreate( Led_Test, &quot;LED&quot;, configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+3, NULL );</span><br><span class="line">    xTaskCreate( USART_Test1, &quot;UART1&quot;, configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+2, NULL );</span><br><span class="line">    xTaskCreate( USART_Test2, &quot;UART2&quot;, configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+2, NULL );</span><br><span class="line">    xTaskCreate( USART_Test3, &quot;UART3&quot;, configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+2, NULL );</span><br><span class="line">    /* 启动OS */</span><br><span class="line">    vTaskStartScheduler();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>FreeRTOS移植完成，多任务运行基本实现</p>
+<ul>
+<li>任务1：100ms设置Led闪烁</li>
+<li>任务2：串口每隔500ms打印“USART 1 hello world xxxx”</li>
+<li>任务3：串口每隔800ms打印“USART 2 hello world xxxx”</li>
+<li>任务4：串口每隔1100ms打印“USART 3 hello world xxxx”</li>
+</ul>
+<h1 id="3-FreeRTOS下串口中断接收"><a href="#3-FreeRTOS下串口中断接收" class="headerlink" title="3. FreeRTOS下串口中断接收"></a>3. FreeRTOS下串口中断接收</h1><h2 id="3-1-main-c代码修改"><a href="#3-1-main-c代码修改" class="headerlink" title="3.1 main.c代码修改"></a>3.1 main.c代码修改</h2><h3 id="3-1-1-定义变量"><a href="#3-1-1-定义变量" class="headerlink" title="3.1.1 定义变量"></a>3.1.1 定义变量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xQueueHandle g_xQueueRx;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-2-增加宏定义"><a href="#3-1-2-增加宏定义" class="headerlink" title="3.1.2 增加宏定义"></a>3.1.2 增加宏定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define EN_USART1_RX 1  // 使能了接收</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-3-增加串口中断处理函数"><a href="#3-1-3-增加串口中断处理函数" class="headerlink" title="3.1.3 增加串口中断处理函数"></a>3.1.3 增加串口中断处理函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#if EN_USART1_RX //如果使能了接收</span><br><span class="line">void USART1_IRQHandler(void)</span><br><span class="line">&#123;</span><br><span class="line">    BaseType_t xHigherPriorityTaskWoken;</span><br><span class="line">    xHigherPriorityTaskWoken = pdFALSE;</span><br><span class="line">    u8 cChar;</span><br><span class="line">	if(USART_GetITStatus (USART1,USART_IT_RXNE)!=RESET)</span><br><span class="line">	&#123;</span><br><span class="line">		cChar=USART_ReceiveData(USART1);</span><br><span class="line">		xQueueSendToBackFromISR (g_xQueueRx, &amp;cChar, &amp;xHigherPriorityTaskWoken);</span><br><span class="line">		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-2-中断向量表配置"><a href="#3-1-2-中断向量表配置" class="headerlink" title="3.1.2 中断向量表配置"></a>3.1.2 中断向量表配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void NVIC_Configuration(void)</span><br><span class="line">&#123;</span><br><span class="line">    NVIC_InitTypeDef  NVIC_InitStructure;</span><br><span class="line">    NVIC_PriorityGroupConfig (NVIC_PriorityGroup_4);</span><br><span class="line">	</span><br><span class="line">#if EN_USART1_RX //如果使能了接收</span><br><span class="line">	// 配置串口1中断向量</span><br><span class="line">    NVIC_InitStructure .NVIC_IRQChannel =USART1_IRQn  ;</span><br><span class="line">	NVIC_InitStructure .NVIC_IRQChannelPreemptionPriority =6;</span><br><span class="line">	NVIC_InitStructure .NVIC_IRQChannelCmd =ENABLE ;</span><br><span class="line">	NVIC_Init(&amp;NVIC_InitStructure );</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-3-串口接收任务创建"><a href="#3-1-3-串口接收任务创建" class="headerlink" title="3.1.3 串口接收任务创建"></a>3.1.3 串口接收任务创建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">void vPC_Communication_Task(void *pvParameters)</span><br><span class="line">&#123;</span><br><span class="line">    BaseType_t xHigherPriorityTaskWoken;</span><br><span class="line">    xHigherPriorityTaskWoken = pdFALSE;</span><br><span class="line">    u8 rx=0;</span><br><span class="line">    g_xQueueRx = xQueueCreate(20,sizeof(u8));</span><br><span class="line">	</span><br><span class="line">    while(1)</span><br><span class="line">    &#123;</span><br><span class="line">        if(xQueueReceiveFromISR(g_xQueueRx, &amp;rx, &amp;xHigherPriorityTaskWoken))</span><br><span class="line">        &#123;</span><br><span class="line">            printf(&quot;%c\r\n&quot;, rx);</span><br><span class="line">        &#125;</span><br><span class="line">    	vTaskDelay(10/portTICK_RATE_MS );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-4-增加NVIC初始化"><a href="#3-1-4-增加NVIC初始化" class="headerlink" title="3.1.4 增加NVIC初始化"></a>3.1.4 增加NVIC初始化</h3><p>在函数static void prvSetupHardware( void )中，增加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NVIC_Configuration();</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-5-增加创建任务"><a href="#3-1-5-增加创建任务" class="headerlink" title="3.1.5 增加创建任务"></a>3.1.5 增加创建任务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xTaskCreate( vPC_Communication_Task, &quot;UART_RECV&quot;, configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+2, NULL );</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-2-最终main-c如下"><a href="#3-2-最终main-c如下" class="headerlink" title="3.2 最终main.c如下"></a>3.2 最终main.c如下</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stm32f10x.h&quot;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">// FreeRTOS相关头文件</span><br><span class="line">#include &quot;FreeRTOS.h&quot;</span><br><span class="line">#include &quot;task.h&quot;       // 创建任务</span><br><span class="line">#include &quot;queue.h&quot;      // 队列操作</span><br><span class="line">#include &quot;semphr.h&quot;     // 信号量</span><br><span class="line"></span><br><span class="line">#define EN_USART1_RX 1</span><br><span class="line"></span><br><span class="line">// 几个打印任务中计数值</span><br><span class="line">u32 g_printf1_conter = 0;</span><br><span class="line">u32 g_printf2_conter = 0;</span><br><span class="line">u32 g_printf3_conter = 0;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">xQueueHandle g_xQueueRx;</span><br><span class="line"></span><br><span class="line">#define EN_USART1_RX 1  // 使能了接收</span><br><span class="line"></span><br><span class="line">// 映射Printf相关</span><br><span class="line">#pragma import(__use_no_semihosting)</span><br><span class="line">struct __FILE</span><br><span class="line">&#123;</span><br><span class="line">    int handle;</span><br><span class="line">&#125;;</span><br><span class="line">FILE __stdout;</span><br><span class="line">void _sys_exit(int x)</span><br><span class="line">&#123;</span><br><span class="line">    x = x;</span><br><span class="line">&#125;</span><br><span class="line">int fputc(int ch,FILE *p)       //?úê1ó?printfê±?μí3×??ˉì?ó?′?oˉêy</span><br><span class="line">&#123;</span><br><span class="line">    USART_SendData(USART1,(u8)ch);</span><br><span class="line">    while(USART_GetFlagStatus(USART1, USART_FLAG_TXE)==RESET);</span><br><span class="line">    return ch;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 简单延时函数</span><br><span class="line">void Delay(u32 count)</span><br><span class="line">&#123;</span><br><span class="line">    static u32 i=0;</span><br><span class="line">    for(i = 0; i &lt; count; i++);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 延时1ms（不准确的延时）</span><br><span class="line">void Delay_ms(u32 ms)</span><br><span class="line">&#123;</span><br><span class="line">    static u32 i = 0;</span><br><span class="line">    for(i = 0; i &lt; ms; i++) &#123;</span><br><span class="line">        Delay(4000);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Led IO初始化</span><br><span class="line">void Led_Init(void)</span><br><span class="line">&#123;</span><br><span class="line">    // LED GPIO初始化</span><br><span class="line">    GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);</span><br><span class="line">    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2; //LED2--&gt;PD.2</span><br><span class="line">    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // 推挽输出</span><br><span class="line">    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; //IO 速度 50MHz</span><br><span class="line">    GPIO_Init(GPIOD, &amp;GPIO_InitStructure); // IO初始化</span><br><span class="line">    GPIO_SetBits(GPIOD, GPIO_Pin_2); // 设置电平PD.2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Led打开</span><br><span class="line">void Led_Open(void)</span><br><span class="line">&#123;</span><br><span class="line">    GPIO_ResetBits(GPIOD,GPIO_Pin_2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Led关闭</span><br><span class="line">void Led_Close(void)</span><br><span class="line">&#123;</span><br><span class="line">    GPIO_SetBits(GPIOD,GPIO_Pin_2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Led_Test(void *pvParameters)</span><br><span class="line">&#123;</span><br><span class="line">    while(1)</span><br><span class="line">    &#123;</span><br><span class="line">        Led_Open();</span><br><span class="line">        vTaskDelay( 100/portTICK_RATE_MS );</span><br><span class="line">        Led_Close();</span><br><span class="line">        vTaskDelay( 100/portTICK_RATE_MS );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//初始化 IO 串口1</span><br><span class="line">//bound: 波特率</span><br><span class="line">void USART1_init(u32 bound)</span><br><span class="line">&#123;</span><br><span class="line">    GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">    USART_InitTypeDef USART_InitStructure;</span><br><span class="line">#if EN_USART1_RX //如果使能了接收</span><br><span class="line">    NVIC_InitTypeDef NVIC_InitStructure;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">    //①串口时钟使能， GPIO 时钟使能，复用时钟使能</span><br><span class="line">    RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1 |</span><br><span class="line">                         RCC_APB2Periph_GPIOA, ENABLE); //使能 USART1,GPIOA 时钟</span><br><span class="line">    RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);</span><br><span class="line"></span><br><span class="line">    //②串口复位</span><br><span class="line">    //USART_DeInit(USART1); //复位串口 1</span><br><span class="line">    //③GPIO 端口模式设置</span><br><span class="line">    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9; //ISART1_TX PA.9</span><br><span class="line">    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; //复用推挽输出</span><br><span class="line">    GPIO_Init(GPIOA, &amp;GPIO_InitStructure); //初始化 GPIOA.9</span><br><span class="line">    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10; //USART1_RX PA.10</span><br><span class="line">    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING; //浮空输入</span><br><span class="line">    GPIO_Init(GPIOA, &amp;GPIO_InitStructure); //初始化 GPIOA.10</span><br><span class="line">    //④串口参数初始化</span><br><span class="line">    USART_InitStructure.USART_BaudRate = bound; //波特率设置</span><br><span class="line">    USART_InitStructure.USART_WordLength = USART_WordLength_8b; //字长为 8 位</span><br><span class="line">    USART_InitStructure.USART_StopBits = USART_StopBits_1; //一个停止位</span><br><span class="line">    USART_InitStructure.USART_Parity = USART_Parity_No; //无奇偶校验位</span><br><span class="line">    USART_InitStructure.USART_HardwareFlowControl</span><br><span class="line">                        = USART_HardwareFlowControl_None; //无硬件数据流控制</span><br><span class="line">    USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;//收发模式</span><br><span class="line">    USART_Init(USART1, &amp;USART_InitStructure); //初始化串口</span><br><span class="line">#if EN_USART1_RX //如果使能了接收</span><br><span class="line">    //⑤初始化 NVIC</span><br><span class="line">    NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;</span><br><span class="line">    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3 ; //抢占优先级 3</span><br><span class="line">    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3; //子优先级 3</span><br><span class="line">    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //IRQ 通道使能</span><br><span class="line">    NVIC_Init(&amp;NVIC_InitStructure); //中断优先级初始化</span><br><span class="line">    //⑤开启中断</span><br><span class="line">    USART_ITConfig(USART1, USART_IT_RXNE, ENABLE); //开启中断</span><br><span class="line">#endif</span><br><span class="line">    //⑥使能串口</span><br><span class="line">    USART_Cmd(USART1, ENABLE); //使能串口</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void USART_Test1(void *pvParameters)</span><br><span class="line">&#123;</span><br><span class="line">    while(1) &#123;</span><br><span class="line">        printf(&quot;USART 1 hello world %04d\r\n&quot;, g_printf1_conter++);</span><br><span class="line">        </span><br><span class="line">        vTaskDelay( 500/portTICK_RATE_MS );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">void USART_Test2(void *pvParameters)</span><br><span class="line">&#123;</span><br><span class="line">    while(1) &#123;</span><br><span class="line">        printf(&quot;USART 2 hello world %04d\r\n&quot;, g_printf2_conter++);</span><br><span class="line">        </span><br><span class="line">        vTaskDelay( 800/portTICK_RATE_MS );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">void USART_Test3(void *pvParameters)</span><br><span class="line">&#123;</span><br><span class="line">    while(1) &#123;</span><br><span class="line">        printf(&quot;USART 3 hello world %04d\r\n&quot;, g_printf3_conter++);</span><br><span class="line">        </span><br><span class="line">        vTaskDelay( 1100/portTICK_RATE_MS );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#if EN_USART1_RX //如果使能了接收</span><br><span class="line">void USART1_IRQHandler(void)</span><br><span class="line">&#123;</span><br><span class="line">    BaseType_t xHigherPriorityTaskWoken;</span><br><span class="line">    xHigherPriorityTaskWoken = pdFALSE;</span><br><span class="line">    u8 cChar;</span><br><span class="line">	if(USART_GetITStatus (USART1,USART_IT_RXNE)!=RESET)</span><br><span class="line">	&#123;</span><br><span class="line">		cChar=USART_ReceiveData(USART1);</span><br><span class="line">		xQueueSendToBackFromISR (g_xQueueRx, &amp;cChar, &amp;xHigherPriorityTaskWoken);</span><br><span class="line">		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">void NVIC_Configuration(void)</span><br><span class="line">&#123;</span><br><span class="line">    NVIC_InitTypeDef  NVIC_InitStructure;</span><br><span class="line">    NVIC_PriorityGroupConfig (NVIC_PriorityGroup_4);</span><br><span class="line">	</span><br><span class="line">#if EN_USART1_RX //如果使能了接收</span><br><span class="line">	// 配置串口1中断向量</span><br><span class="line">    NVIC_InitStructure .NVIC_IRQChannel =USART1_IRQn  ;</span><br><span class="line">	NVIC_InitStructure .NVIC_IRQChannelPreemptionPriority =6;</span><br><span class="line">	NVIC_InitStructure .NVIC_IRQChannelCmd =ENABLE ;</span><br><span class="line">	NVIC_Init(&amp;NVIC_InitStructure );</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void vPC_Communication_Task(void *pvParameters)</span><br><span class="line">&#123;</span><br><span class="line">    BaseType_t xHigherPriorityTaskWoken;</span><br><span class="line">    xHigherPriorityTaskWoken = pdFALSE;</span><br><span class="line">    u8 rx=0;</span><br><span class="line">    g_xQueueRx = xQueueCreate(20,sizeof(u8));</span><br><span class="line">	</span><br><span class="line">    while(1)</span><br><span class="line">    &#123;</span><br><span class="line">        if(xQueueReceiveFromISR(g_xQueueRx, &amp;rx, &amp;xHigherPriorityTaskWoken))</span><br><span class="line">        &#123;</span><br><span class="line">            printf(&quot;%c\r\n&quot;, rx);</span><br><span class="line">        &#125;</span><br><span class="line">    	vTaskDelay(10/portTICK_RATE_MS );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*-----------------------------------------------------------*/</span><br><span class="line">static void prvSetupHardware( void )</span><br><span class="line">&#123;</span><br><span class="line">    SystemInit();</span><br><span class="line">    </span><br><span class="line">    NVIC_Configuration();</span><br><span class="line"></span><br><span class="line">    Led_Init();</span><br><span class="line">    USART1_init(115200);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/************************************************************/</span><br><span class="line">// 主函数</span><br><span class="line">/************************************************************/</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    // 初始化硬件平台</span><br><span class="line">    prvSetupHardware();</span><br><span class="line"></span><br><span class="line">    printf(&quot;hello world\r\n&quot;);</span><br><span class="line"></span><br><span class="line">    Delay_ms(1000);</span><br><span class="line"></span><br><span class="line">    /* 建立任务 */</span><br><span class="line">    xTaskCreate( Led_Test, &quot;LED&quot;, configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+3, NULL );</span><br><span class="line">    xTaskCreate( USART_Test1, &quot;UART1&quot;, configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+2, NULL );</span><br><span class="line">    xTaskCreate( USART_Test2, &quot;UART2&quot;, configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+2, NULL );</span><br><span class="line">    xTaskCreate( USART_Test3, &quot;UART3&quot;, configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+2, NULL );</span><br><span class="line">    xTaskCreate( vPC_Communication_Task, &quot;UART_RECV&quot;, configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+2, NULL );</span><br><span class="line">    /* 启动OS */</span><br><span class="line">    vTaskStartScheduler();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/STM32/" rel="tag"># STM32</a>
+          
+            <a href="/tags/FreeRTOS/" rel="tag"># FreeRTOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/31/Hexo新建文章/" rel="next" title="Hexo新建文章">
+                <i class="fa fa-chevron-left"></i> Hexo新建文章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/31/STM32-FreeRTOS知识整理总结/" rel="prev" title="STM32-FreeRTOS知识整理总结">
+                STM32-FreeRTOS知识整理总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/IMG_20150705_122453_2.jpg" alt="zhou">
+            
+              <p class="site-author-name" itemprop="name">zhou</p>
+              <p class="site-description motion-element" itemprop="description">周善宝的个人博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-STM32工程创建"><span class="nav-text">1. STM32工程创建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-准备"><span class="nav-text">1.1 准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-开始"><span class="nav-text">1.2 开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-Keil环境"><span class="nav-text">1.2.1 Keil环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-创建工程"><span class="nav-text">1.2.2 创建工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-移植固件库包"><span class="nav-text">1.2.3 移植固件库包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-4-将固件库文件添加到工程"><span class="nav-text">1.2.4 将固件库文件添加到工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-5-添加头文件"><span class="nav-text">1.2.5 添加头文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-6-添加宏定义"><span class="nav-text">1.2.6 添加宏定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-7-修改main-c"><span class="nav-text">1.2.7 修改main.c</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-8-下载运行"><span class="nav-text">1.2.8 下载运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-串口打印"><span class="nav-text">1.3 串口打印</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-串口初始化代码"><span class="nav-text">1.3.1 串口初始化代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-FreeRTOS移植"><span class="nav-text">2. FreeRTOS移植</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-准备"><span class="nav-text">2.1 准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-开始"><span class="nav-text">2.2 开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-移植文件"><span class="nav-text">2.2.1 移植文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-将OS文件添加到工程"><span class="nav-text">2.2.2 将OS文件添加到工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-添加头文件"><span class="nav-text">2.2.3 添加头文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-4-修改"><span class="nav-text">2.2.4 修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-5-包含头文件"><span class="nav-text">2.2.5 包含头文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-测试"><span class="nav-text">2.3 测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-FreeRTOS下串口中断接收"><span class="nav-text">3. FreeRTOS下串口中断接收</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-main-c代码修改"><span class="nav-text">3.1 main.c代码修改</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-定义变量"><span class="nav-text">3.1.1 定义变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-增加宏定义"><span class="nav-text">3.1.2 增加宏定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-3-增加串口中断处理函数"><span class="nav-text">3.1.3 增加串口中断处理函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-中断向量表配置"><span class="nav-text">3.1.2 中断向量表配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-3-串口接收任务创建"><span class="nav-text">3.1.3 串口接收任务创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-4-增加NVIC初始化"><span class="nav-text">3.1.4 增加NVIC初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-5-增加创建任务"><span class="nav-text">3.1.5 增加创建任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-最终main-c如下"><span class="nav-text">3.2 最终main.c如下</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhou</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
