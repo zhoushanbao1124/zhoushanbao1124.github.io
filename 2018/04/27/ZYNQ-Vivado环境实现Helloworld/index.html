@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-bounce.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Xilinx,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Vivado1. Vivado工程创建">
+<meta name="keywords" content="Xilinx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZYNQ Vivado环境实现Helloworld">
+<meta property="og:url" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/index.html">
+<meta property="og:site_name" content="Home">
+<meta property="og:description" content="Vivado1. Vivado工程创建">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352857194.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352884797.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352909696.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352929648.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352947235.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352970697.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352984634.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353011648.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353034419.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353059460.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353084202.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353101989.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353130981.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353167570.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353186420.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353209040.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353226399.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353240962.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353261511.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353282367.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353295179.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353316400.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353328265.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353354569.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353395696.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353444319.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353464399.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353489047.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353501670.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353518511.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353542225.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353564672.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353595725.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353611899.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353626272.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353640318.png">
+<meta property="og:updated_time" content="2019-07-05T19:07:38.650Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ZYNQ Vivado环境实现Helloworld">
+<meta name="twitter:description" content="Vivado1. Vivado工程创建">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352857194.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/">
+
+
+
+
+
+  <title>ZYNQ Vivado环境实现Helloworld | Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/27/ZYNQ-Vivado环境实现Helloworld/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhou">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/IMG_20150705_122453_2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ZYNQ Vivado环境实现Helloworld</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-27T00:00:00+08:00">
+                2018-04-27
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-06T03:07:38+08:00">
+                2019-07-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Xilinx/" itemprop="url" rel="index">
+                    <span itemprop="name">Xilinx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Vivado"><a href="#Vivado" class="headerlink" title="Vivado"></a>Vivado</h1><h2 id="1-Vivado工程创建"><a href="#1-Vivado工程创建" class="headerlink" title="1. Vivado工程创建"></a>1. Vivado工程创建</h2><a id="more"></a>
+
+<p>1.1 在Vivado开发环境里双击Create New Project图标</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352857194.png" alt="1562352857194"></p>
+<p>1.2 弹出一个Vivado工程向导，点击Next按钮。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352884797.png" alt="1562352884797"></p>
+<p>1.3 在弹出的对话框中输入工程名和工程存放目录，我们这里取一个ZYNQ7030_h3lloworld的工程名。点击Next按钮。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352909696.png" alt="1562352909696"></p>
+<p>1.4 在下面的对话框中默认选择RTL Project, 勾上下面的 Do not specify source at this time 。如果不勾上，下一步会进入添加source file界面。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352929648.png" alt="1562352929648"></p>
+<p>1.5 在接下来的对话框选择所用的FPGA器件，以及进行一些配置。FPGA芯片型号一定要跟开发板上的型号一致。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352947235.png" alt="1562352947235"></p>
+<p>1.6 再次确认一下板子型号有没有选对,没有问题再点击“Finish”完成工程创建。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352970697.png" alt="1562352970697"></p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562352984634.png" alt="1562352984634"></p>
+<p>工程创建后如下图所示：</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353011648.png" alt="1562353011648"></p>
+<h2 id="2-原理图设计"><a href="#2-原理图设计" class="headerlink" title="2. 原理图设计"></a>2. 原理图设计</h2><p>2.1 ZYNQ的嵌入式系统开发一般有原理框图的形式来设计，这样硬件的连接看起来会更加直观。点击Create Block Design按钮来添加原理图设计文件。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353034419.png" alt="1562353034419"></p>
+<p>2.2 在弹出的对话框里输入原理图设计文件的名字，这里我们取名为”system”。</p>
+<p>2.3 出现Diagram的空白对话框，点击图标来添加ARM处理器内核到这个空白的原理图里。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353059460.png" alt="1562353059460"></p>
+<p>2.4 这里有很多Xilinx提供的IP，我们找到ZYNQ7 Processing System 并双击 添加。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353084202.png" alt="1562353084202"></p>
+<p>ZYNQ的处理器系统已经添加到Block Diagram窗口上了。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353101989.png" alt="1562353101989"></p>
+<h2 id="3-ZYNQ系统的配置"><a href="#3-ZYNQ系统的配置" class="headerlink" title="3. ZYNQ系统的配置"></a>3. ZYNQ系统的配置</h2><p>3.1 双击Diagram界面里的ZYNQ Processing System,打开ZYNQ系统的配置界面</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353130981.png" alt="1562353130981"></p>
+<blockquote>
+<p>其中Page Navigator界面下有8个子项，分别为Zynq Block Design, PS-PL Configuration,Peripheral I/O Pins, MIO Configration, Clock Configuration, DDR Configuration, SMCTiming Calculation, Interrupts。这些页面选项是针对ZYNQ的不同硬件模块的配置，其中PS_PL页面提供了PS到PL的相关接口配置信息以及PS部分一些配置信息；Peripheral I/O Pins页面主要是对一些通用外设接口的配置；MIO Configruation页面主要是对MIO已经EMIO的分配控制；Clock Configruation页面主要是对PS端时钟资源的配置和管理；DDR Configration页面主要是对DDR控制器一些参数的配置；Interrupts页面主要是对中断进行配置管理。具体页面里的每项内容这里我们不一一讲解了，很多配置我们都会在后面的应用中用到。</p>
+</blockquote>
+<h3 id="具体配置操作如下："><a href="#具体配置操作如下：" class="headerlink" title="具体配置操作如下："></a>具体配置操作如下：</h3><p>（1）PS-PL Configuration-&gt;General-&gt;Enable Clock Resets-&gt;去掉FCLK_RESET0_N的使能。<br>（2）PS-PL Configuration-&gt;GP Master AXI Interface-&gt;去掉M AXI GPO interface的使能。<br>（3）Clock Configuration-&gt;PL Fabric Clocks-&gt;去掉FCLK_CLK0的使能。<br>（4）DDR Congiguration-&gt;去掉Enable DDR的使能。<br>（5）MIO Configuration-&gt;I/O Peripherals-&gt;选上UART1，UART1引脚具体配置如图所示。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353167570.png" alt="1562353167570"></p>
+<p>3.2 配置完成点击OK，退回到Vivado的开发环境。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353186420.png" alt="1562353186420"></p>
+<h2 id="4-生成外部链接IO管脚"><a href="#4-生成外部链接IO管脚" class="headerlink" title="4. 生成外部链接IO管脚"></a>4. 生成外部链接IO管脚</h2><p>在Diagram界面里点击”Run Block Automation”完成对ZYNQ7 Processing System IP核的配置，并生成外部ZYNQ系统的外部链接IO管脚。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353209040.png" alt="1562353209040"></p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353226399.png" alt="1562353226399"></p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353240962.png" alt="1562353240962"></p>
+<h2 id="5-生成-HDL-文件"><a href="#5-生成-HDL-文件" class="headerlink" title="5. 生成 HDL 文件"></a>5. 生成 HDL 文件</h2><p>5.1 按Ctrl+S键保存一下Diagram，然后点击Sources选顷卡。<br>5.2 右键选择sysetm,在弹出的菜单中选择Generate Output Products…</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353261511.png" alt="1562353261511"></p>
+<p>点击Generate按钮，这一操作将会生成Diagram Block Design的HDL源文件以及相应端口的约束文件。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353282367.png" alt="1562353282367"></p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353295179.png" alt="1562353295179"></p>
+<p>5.3 创建一个顶层的HDL文件,右键选择sysetm,在弹出的框框中选择Create HDL Wrapper..。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353316400.png" alt="1562353316400"></p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353328265.png" alt="1562353328265"></p>
+<p>这样一个system_wrapper.v的顶层文件就生成了，这样我们就可以对该系统进行综合、布线并生成比特流了。<br>5.4 因为这个嵌入式系统只有PS部分的管脚，没有PL部分的管脚，而且PS部分的管脚都是固定的，所以我们不需要添加管脚约束文件。另外因为没有使用PL部分的资源，我们也不需要在Vivado下编译和生成bit文件了。</p>
+<h2 id="6-硬件导入SDK"><a href="#6-硬件导入SDK" class="headerlink" title="6. 硬件导入SDK"></a>6. 硬件导入SDK</h2><p>6.1 选择菜单File-&gt;Export-&gt;Export Hardware…。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353354569.png" alt="1562353354569"></p>
+<p>因为没有生成bit文件，所以不要选Include bitstream，点击OK。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353395696.png" alt="1562353395696"></p>
+<p>6.2 硬件导出完成后，选择菜单File-&gt;Launch SDK，启动SDK开发环境</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353444319.png" alt="1562353444319"></p>
+<p>点击OK，软件会自动启动SDK开发环境</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353464399.png" alt="1562353464399"></p>
+<h1 id="SDK编程"><a href="#SDK编程" class="headerlink" title="SDK编程"></a>SDK编程</h1><p>1.选择菜单File-&gt;New-&gt;Application Project,新建一个SDK的软件工程</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353489047.png" alt="1562353489047"></p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353501670.png" alt="1562353501670"></p>
+<p>2.输入工程名字为ZYNQ7030_helloworld,并生成一个新的bsp文件</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353518511.png" alt="1562353518511"></p>
+<p>3.选择工程模版Hello World。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353542225.png" alt="1562353542225"></p>
+<p>4.生成后的helloworld项目和bsp支持包如下，在helloworld.c文件里就是添加循环打印一个hello World的字符。</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353564672.png" alt="1562353564672"></p>
+<p>5.右键选择helloworld工程，选择Build Project，编译一下。</p>
+<p>下载和调试</p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353595725.png" alt="1562353595725"></p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353611899.png" alt="1562353611899"></p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353626272.png" alt="1562353626272"></p>
+<p><img src="/2018/04/27/ZYNQ-Vivado环境实现Helloworld/1562353640318.png" alt="1562353640318"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Xilinx/" rel="tag"># Xilinx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/23/我们在一起两年了/" rel="next" title="我们在一起两年了">
+                <i class="fa fa-chevron-left"></i> 我们在一起两年了
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/28/MFC程序使用-printf-输出调试信息/" rel="prev" title="MFC程序使用 printf 输出调试信息">
+                MFC程序使用 printf 输出调试信息 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/IMG_20150705_122453_2.jpg" alt="zhou">
+            
+              <p class="site-author-name" itemprop="name">zhou</p>
+              <p class="site-description motion-element" itemprop="description">周善宝的个人博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vivado"><span class="nav-text">Vivado</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Vivado工程创建"><span class="nav-text">1. Vivado工程创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-原理图设计"><span class="nav-text">2. 原理图设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-ZYNQ系统的配置"><span class="nav-text">3. ZYNQ系统的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#具体配置操作如下："><span class="nav-text">具体配置操作如下：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-生成外部链接IO管脚"><span class="nav-text">4. 生成外部链接IO管脚</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-生成-HDL-文件"><span class="nav-text">5. 生成 HDL 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-硬件导入SDK"><span class="nav-text">6. 硬件导入SDK</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SDK编程"><span class="nav-text">SDK编程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhou</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
