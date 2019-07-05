@@ -506,8 +506,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-06-10T23:22:14+08:00">
-                2019-06-10
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-06T03:32:09+08:00">
+                2019-07-06
               </time>
             
           </span>
@@ -525,8 +525,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C</span>
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
                   </a>
                 </span>
 
@@ -776,165 +776,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/Qt-Timer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhou">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/IMG_20150705_122453_2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/27/Qt-Timer/" itemprop="url">Qt Timer</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-27T00:00:00+08:00">
-                2018-06-27
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2019-06-10T23:25:31+08:00">
-                2019-06-10
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Qt/" itemprop="url" rel="index">
-                    <span itemprop="name">Qt</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>*.h</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Timeout_Slots</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>*.cpp</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTimer&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 创建定时器</span></span><br><span class="line">QTimer *timer = <span class="keyword">new</span> QTimer(<span class="keyword">this</span>);</span><br><span class="line">timer-&gt;start(<span class="number">1000</span>);</span><br><span class="line">connect(timer, SIGNAL(timeout()), <span class="keyword">this</span>, SLOT(Timeout_Slots()));  <span class="comment">// 关联定时器槽函数</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 定时器槽函数</span></span><br><span class="line"><span class="keyword">void</span> Widget::Timeout_Slots()</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; <span class="string">"[FILE:"</span> &lt;&lt; __FILE__ &lt;&lt; <span class="string">",LINE"</span> &lt;&lt; __LINE__ &lt;&lt; <span class="string">",FUNC"</span> &lt;&lt; __FUNCTION__ &lt;&lt; <span class="string">"]"</span>;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/ZYNQ-MIO-C代码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1048,6 +889,165 @@
             </a>
           </div>
           <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/Qt-Timer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhou">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/IMG_20150705_122453_2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/27/Qt-Timer/" itemprop="url">Qt Timer</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-27T00:00:00+08:00">
+                2018-06-27
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-06-10T23:25:31+08:00">
+                2019-06-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Qt/" itemprop="url" rel="index">
+                    <span itemprop="name">Qt</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>*.h</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Timeout_Slots</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>*.cpp</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTimer&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 创建定时器</span></span><br><span class="line">QTimer *timer = <span class="keyword">new</span> QTimer(<span class="keyword">this</span>);</span><br><span class="line">timer-&gt;start(<span class="number">1000</span>);</span><br><span class="line">connect(timer, SIGNAL(timeout()), <span class="keyword">this</span>, SLOT(Timeout_Slots()));  <span class="comment">// 关联定时器槽函数</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 定时器槽函数</span></span><br><span class="line"><span class="keyword">void</span> Widget::Timeout_Slots()</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; <span class="string">"[FILE:"</span> &lt;&lt; __FILE__ &lt;&lt; <span class="string">",LINE"</span> &lt;&lt; __LINE__ &lt;&lt; <span class="string">",FUNC"</span> &lt;&lt; __FUNCTION__ &lt;&lt; <span class="string">"]"</span>;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
         
       
     </div>
@@ -1409,7 +1409,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/23/Qt打印文件名、函数名、行号/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/23/三种DLL（Win32DLL，MFC常规DLL和MFC拓展DLL）的简单学习总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhou">
@@ -1428,7 +1428,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/23/Qt打印文件名、函数名、行号/" itemprop="url">Qt打印文件名、函数名、行号</a></h1>
+                <a class="post-title-link" href="/2018/06/23/三种DLL（Win32DLL，MFC常规DLL和MFC拓展DLL）的简单学习总结/" itemprop="url">三种DLL（Win32DLL，MFC常规DLL和MFC拓展DLL）的简单学习总结</a></h1>
         
 
         <div class="post-meta">
@@ -1456,7 +1456,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-06-10T23:57:33+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-06-10T23:48:50+08:00">
                 2019-06-10
               </time>
             
@@ -1475,8 +1475,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Qt/" itemprop="url" rel="index">
-                    <span itemprop="name">Qt</span>
+                  <a href="/categories/MFC/" itemprop="url" rel="index">
+                    <span itemprop="name">MFC</span>
                   </a>
                 </span>
 
@@ -1514,8 +1514,15 @@
       
         
           
-            <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qDebug() &lt;&lt; <span class="string">"[FILE:"</span> &lt;&lt; __FILE__ &lt;&lt; <span class="string">",LINE"</span> &lt;&lt; __LINE__ &lt;&lt; <span class="string">",FUNC"</span> &lt;&lt; __FUNCTION__ &lt;&lt; <span class="string">"]"</span>;</span><br></pre></td></tr></table></figure>
-
+            <p>学习了三种动态链接库的基本知识，分别是Win32DLL，MFC常规DLL和MFC拓展DLL。</p>
+<blockquote>
+<ul>
+<li>Win32DLL使用的是Win32的API实现的，只能导出函数，能被各种应用程序调用，适用范围最广。</li>
+<li>MFC常规DLL是适用MFC创建的，就像MFC程序跟Win32程序的关系一样，MFC常规DLL和Win32DLL的关系也是如此。它使用MFC的机制，只能导出标准C函数。如此，它便可以被大部分Win32程序调用。</li>
+<li>MFC拓展DLL也也使用的是MFC机制创建的，相比于MFC常规DLL，拓展DLL可以导出C++类和MFC派生类，如此扩大了DLL的接口范围。此长彼消，MFC拓展DLL的适用范围较小，只能被MFC程序调用。因为它导出的不只是函数，还有C++类和MFC派生类。</li>
+</ul>
+</blockquote>
+<p>另外，所有的动态链接库都有两种链接方式：隐式调用和显示调用。隐式链接使用起来比较方便，不过不够灵活；显示链接可以在真正要用DLL的时候才装入，并在适当的时候释放，操作相对复杂一些。</p>
 
           
         
@@ -1736,7 +1743,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/23/三种DLL（Win32DLL，MFC常规DLL和MFC拓展DLL）的简单学习总结/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/23/Qt打印文件名、函数名、行号/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhou">
@@ -1755,7 +1762,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/23/三种DLL（Win32DLL，MFC常规DLL和MFC拓展DLL）的简单学习总结/" itemprop="url">三种DLL（Win32DLL，MFC常规DLL和MFC拓展DLL）的简单学习总结</a></h1>
+                <a class="post-title-link" href="/2018/06/23/Qt打印文件名、函数名、行号/" itemprop="url">Qt打印文件名、函数名、行号</a></h1>
         
 
         <div class="post-meta">
@@ -1783,7 +1790,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-06-10T23:48:50+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-06-10T23:57:33+08:00">
                 2019-06-10
               </time>
             
@@ -1802,8 +1809,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MFC/" itemprop="url" rel="index">
-                    <span itemprop="name">MFC</span>
+                  <a href="/categories/Qt/" itemprop="url" rel="index">
+                    <span itemprop="name">Qt</span>
                   </a>
                 </span>
 
@@ -1841,15 +1848,8 @@
       
         
           
-            <p>学习了三种动态链接库的基本知识，分别是Win32DLL，MFC常规DLL和MFC拓展DLL。</p>
-<blockquote>
-<ul>
-<li>Win32DLL使用的是Win32的API实现的，只能导出函数，能被各种应用程序调用，适用范围最广。</li>
-<li>MFC常规DLL是适用MFC创建的，就像MFC程序跟Win32程序的关系一样，MFC常规DLL和Win32DLL的关系也是如此。它使用MFC的机制，只能导出标准C函数。如此，它便可以被大部分Win32程序调用。</li>
-<li>MFC拓展DLL也也使用的是MFC机制创建的，相比于MFC常规DLL，拓展DLL可以导出C++类和MFC派生类，如此扩大了DLL的接口范围。此长彼消，MFC拓展DLL的适用范围较小，只能被MFC程序调用。因为它导出的不只是函数，还有C++类和MFC派生类。</li>
-</ul>
-</blockquote>
-<p>另外，所有的动态链接库都有两种链接方式：隐式调用和显示调用。隐式链接使用起来比较方便，不过不够灵活；显示链接可以在真正要用DLL的时候才装入，并在适当的时候释放，操作相对复杂一些。</p>
+            <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qDebug() &lt;&lt; <span class="string">"[FILE:"</span> &lt;&lt; __FILE__ &lt;&lt; <span class="string">",LINE"</span> &lt;&lt; __LINE__ &lt;&lt; <span class="string">",FUNC"</span> &lt;&lt; __FUNCTION__ &lt;&lt; <span class="string">"]"</span>;</span><br></pre></td></tr></table></figure>
+
 
           
         
@@ -1948,7 +1948,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1959,7 +1959,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
