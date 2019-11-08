@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Linux驱动程序,">
 
 
 
@@ -86,16 +86,18 @@
 
 
 
-<meta name="description" content="周善宝的个人博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Home">
-<meta property="og:url" content="http://yoursite.com/tags/Vivado/index.html">
+<meta name="description" content="解决上一篇遗留问题第一个问题的解决方案很简单，注册驱动程序的时候，如果传入的major为0，那么系统将会自动为这个驱动程序分配主设备号，同时这个程序也会返回所分配的主设备号。第二个问题，解决起来也不是很困难，在Linux中提供了一种机制是udev，可以用于自动的创建设备，在嵌入式Linux的文件系统，比如busybox，也有一套简化版的机制，是mdev，在配置文件系统的时候会进行相应的配置，写完了">
+<meta name="keywords" content="Linux驱动程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux字符设备驱动_third_drv">
+<meta property="og:url" content="http://yoursite.com/2018/04/19/Linux字符设备驱动-third-drv/index.html">
 <meta property="og:site_name" content="Home">
-<meta property="og:description" content="周善宝的个人博客">
+<meta property="og:description" content="解决上一篇遗留问题第一个问题的解决方案很简单，注册驱动程序的时候，如果传入的major为0，那么系统将会自动为这个驱动程序分配主设备号，同时这个程序也会返回所分配的主设备号。第二个问题，解决起来也不是很困难，在Linux中提供了一种机制是udev，可以用于自动的创建设备，在嵌入式Linux的文件系统，比如busybox，也有一套简化版的机制，是mdev，在配置文件系统的时候会进行相应的配置，写完了">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-11-08T19:26:36.027Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Home">
-<meta name="twitter:description" content="周善宝的个人博客">
+<meta name="twitter:title" content="Linux字符设备驱动_third_drv">
+<meta name="twitter:description" content="解决上一篇遗留问题第一个问题的解决方案很简单，注册驱动程序的时候，如果传入的major为0，那么系统将会自动为这个驱动程序分配主设备号，同时这个程序也会返回所分配的主设备号。第二个问题，解决起来也不是很困难，在Linux中提供了一种机制是udev，可以用于自动的创建设备，在嵌入式Linux的文件系统，比如busybox，也有一套简化版的机制，是mdev，在配置文件系统的时候会进行相应的配置，写完了">
 
 
 
@@ -125,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/Vivado/">
+  <link rel="canonical" href="http://yoursite.com/2018/04/19/Linux字符设备驱动-third-drv/">
 
 
 
 
 
-  <title>标签: Vivado | Home</title>
+  <title>Linux字符设备驱动_third_drv | Home</title>
   
 
 
@@ -150,7 +152,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -286,52 +288,197 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Vivado<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/19/Linux字符设备驱动-third-drv/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhou">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/IMG_20150705_122453_2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Home">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/02/15/Vivado-2016-4-固化/" itemprop="url">
-              
-                <span itemprop="name">Vivado 2016.4 固化</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Linux字符设备驱动_third_drv</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-15T00:00:00+08:00" content="2019-02-15">
-          02-15
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-19T03:22:33+08:00">
+                2018-04-19
+              </time>
+            
 
-    </header>
-  </article>
+            
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-11-09T03:26:36+08:00">
+                2019-11-09
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux驱动程序/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux驱动程序</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>解决<a href="http://xbao.org/2018/04/19/linux字符设备驱动_first_drv/" target="_blank" rel="noopener">上一篇</a>遗留问题<br>第一个问题的解决方案很简单，注册驱动程序的时候，如果传入的major为0，那么系统将会自动为这个驱动程序分配主设备号，同时这个程序也会返回所分配的主设备号。<br>第二个问题，解决起来也不是很困难，在Linux中提供了一种机制是udev，可以用于自动的创建设备，在嵌入式Linux的文件系统，比如busybox，也有一套简化版的机制，是mdev，在配置文件系统的时候会进行相应的配置，写完了关于文件系统的文章，我会将链接贴上来。<br>我们如果在调用驱动程序的入口函数的时候，就使用mdev来创建这个设备文件其实就行了。使用mdev的时候，需要用到两个结构体，一个是class和class_device。这两个结构体，都定义在%kernel%/include/linux/device.h的头文件中</p>
+<a id="more"></a>
+
+<h3 id="third-drv-c"><a href="#third-drv-c" class="headerlink" title="third_drv.c"></a>third_drv.c</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`<span class="meta">#<span class="meta-keyword">include</span> ``#<span class="meta-keyword">include</span> ``#<span class="meta-keyword">include</span> ``#<span class="meta-keyword">include</span>   <span class="comment">//class、class_device结构体的定义位置` `static` `const` `char` `*third_dev_name = ``"third_driver"``;``static` `struct` `class` `*third_class;  ``//定义class结构体``//static struct class_device *third_class_dev;  //定义class_device结构体``static` `struct` `device *third_device;  ``//定义class_device结构体` `static` `struct` `file_operations third_fos=``&#123;``    ``.owner = THIS_MODULE,  ``//file_operations结构题中只指定owner``&#125;;` `static` `int` `dev_id = 0;   ``//初始化的设备号0``static` `int` `__init third_init(``void``)``&#123;``    ``dev_id = register_chrdev(dev_id, third_dev_name, &amp;third_fos); ``//指定的主设备号为0，同时把用设备号来接收函数的返回值，实际该函数会返回自动创建的主设备号``    ``third_class = class_create(THIS_MODULE, ``"third_drv"``);  ``//初始化class结构体，指定设备文件名``    ``third_device = device_create(third_class, NULL, MKDEV(dev_id, 0), NULL, ``"third_drv"``);``// 根据class来初始化class_device，会创建出对应的设备文件``    ``printk(``"third_driver_init\n"``);` `    ``return` `0;``&#125;` `static` `void` `__exit third_exit(``void``)``&#123;``    ``unregister_chrdev(dev_id, third_dev_name);``    ``device_unregister(third_device); ``// 后创建的先卸载``    ``class_destroy(third_class);` `    ``printk(``"third_driver_exit\n"``);``&#125;` `module_init(third_init);``module_exit(third_exit);` `MODULE_LICENSE(``"GPL"``);``MODULE_AUTHOR(``"zhou"``);`</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`<span class="keyword">ifneq</span> (<span class="variable">$(KERNELRELEASE)</span>,)``obj-m :=third_drv.o` `<span class="keyword">else</span>``KDIR:= ``/lib/modules/``<span class="variable">$(<span class="built_in">shell</span> ``uname` `-r)</span>``/build``all:``    ``make` `-C <span class="variable">$(KDIR)</span> M=<span class="variable">$(PWD)</span> modules``clean: ``    ``rm` `-f *.ko *.o *.mod.o *.mod.c *.order *.symvers``<span class="keyword">endif</span>`</span><br></pre></td></tr></table></figure>
+
+<h3 id="“make”编译后"><a href="#“make”编译后" class="headerlink" title="“make”编译后"></a>“make”编译后</h3><p>使用”insmod third_drv.ko”加载驱动程序，会自动创建设备文件<br>使用”rmmod third_drv”卸载驱动程序，会自动卸载设备文件</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux驱动程序/" rel="tag"># Linux驱动程序</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/19/Linux字符设备驱动-first-drv/" rel="next" title="Linux字符设备驱动_first_drv">
+                <i class="fa fa-chevron-left"></i> Linux字符设备驱动_first_drv
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/23/我们在一起两年了/" rel="prev" title="我们在一起两年了">
+                我们在一起两年了 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -339,6 +486,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -359,8 +510,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -377,7 +537,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-count">90</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -388,7 +548,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -399,7 +559,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -422,6 +582,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#third-drv-c"><span class="nav-text">third_drv.c</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Makefile"><span class="nav-text">Makefile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“make”编译后"><span class="nav-text">“make”编译后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -582,6 +758,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
